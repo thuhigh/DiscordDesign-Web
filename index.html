@@ -22,7 +22,7 @@ h1{margin:0;font-size:2.1rem;font-weight:800;letter-spacing:-.03em}
 .rd:active,.tb:active,.row:active{transform:scale(.96)}
 .pop{border-radius:22px;padding:14px 16px;margin-bottom:14px}
 .pop[hidden]{display:none}
-.pop div{display:flex;justify-content:space-between;color:var(--mu);font-size:.8rem}
+.cap0{display:flex;justify-content:space-between;color:var(--mu);font-size:.85rem;font-weight:600}
 input[type=range]{width:100%;accent-color:var(--tint);margin:8px 0 0}
 .sec{margin:20px 4px 8px;color:var(--mu);font-size:.8rem;font-weight:600}
 .dc{background:#2b2d31;color:#f2f3f5;border-radius:24px;overflow:hidden;font-family:"Segoe UI",system-ui,sans-serif;box-shadow:0 24px 60px -22px #5e5ce6;border:1px solid rgba(255,255,255,.1)}
@@ -82,15 +82,7 @@ input[type=text]::placeholder{color:var(--mu)}
 .sg.on{background:rgba(255,255,255,.24);box-shadow:0 2px 6px rgba(0,0,0,.25)}
 @media(prefers-color-scheme:light){.sg.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
 
-.au{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
-.au i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(80px);opacity:.42;animation:fl 28s ease-in-out infinite alternate}
-.au i:nth-child(1){background:#5e5ce6;left:-18vmax;top:-18vmax}
-.au i:nth-child(2){background:#ff375f;right:-24vmax;top:8vmax;opacity:.28;animation-delay:-10s}
-.au i:nth-child(3){background:#30d1ac;left:8vmax;bottom:-28vmax;opacity:.3;animation-delay:-18s}
-@keyframes fl{to{transform:translate(9vmax,6vmax) scale(1.18)}}
-@media(prefers-color-scheme:light){.au i{opacity:.22!important}}
-@media(prefers-reduced-motion:reduce){.au i{animation:none}}
-.dc{display:flex}
+@media(prefers-color-scheme:light){@media(prefers-reduced-motion:reduce){.dc{display:flex}
 .rail{flex:none;width:58px;background:#1e1f22;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0}
 .sv{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;transition:border-radius .2s}
 .sv.a{border-radius:14px}.sv:hover{border-radius:14px}
@@ -112,6 +104,45 @@ input[type=text]::placeholder{color:var(--mu)}
   .grid{grid-template-columns:repeat(auto-fill,minmax(58px,1fr))}
   .sec{margin-top:4px}.sec:not(:first-child){margin-top:22px}
 }
+
+.how{margin:-4px 4px 14px;color:var(--mu);font-size:.88rem}
+.how b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--tint);color:#fff;font-size:.72rem;margin-right:2px}
+.opt summary{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none;border-top:1px solid var(--ln)}
+.opt summary::-webkit-details-marker{display:none}
+.opt summary span{flex:1;font-weight:600}
+.opt summary em{font-style:normal;color:var(--mu);font-size:.85rem;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opt summary::after{content:"";width:8px;height:8px;border-right:2.5px solid var(--mu);border-bottom:2.5px solid var(--mu);transform:rotate(-45deg);transition:transform .2s;flex:none}
+.opt[open] summary::after{transform:rotate(45deg)}
+.opt .scroll{border-top:0;padding:4px 16px 10px}
+.opt #pick{padding-top:0}
+.cap{margin:12px 16px 2px;color:var(--mu);font-size:.75rem;font-weight:600}
+.chip{padding:9px 15px}.sg{padding:9px 2px}
+#pv{max-height:200px!important}
+@media(min-width:900px){#pv{max-height:calc(100vh - 250px)!important}}
+
+/* ===== Giao diện mới: nền đặc, chữ tương phản cao ===== */
+:root{--bg:#0f1115;--card:#1a1d24;--bd:#2c313c;--tx:#f5f6fa;--mu:#b3b9c9;--ln:#2c313c;--chip:#2a2f3b;--sel:#262d4d;--hov:#222733;--segon:#4a5166;--tint:#4f5df5;--acc:#a9b2ff;--bar:rgba(26,29,36,.92)}
+:root[data-theme=light]{--bg:#f1f2f7;--card:#fff;--bd:#dcdfe8;--tx:#13151c;--mu:#555b6c;--ln:#e3e6ee;--chip:#e8eaf1;--sel:#e8ebff;--hov:#f3f4f9;--segon:#fff;--tint:#3d4ae0;--acc:#3340d6;--bar:rgba(255,255,255,.92)}
+@media(prefers-color-scheme:light){:root:not([data-theme=dark]):not([data-theme=light]){--bg:#f1f2f7;--card:#fff;--bd:#dcdfe8;--tx:#13151c;--mu:#555b6c;--ln:#e3e6ee;--chip:#e8eaf1;--sel:#e8ebff;--hov:#f3f4f9;--segon:#fff;--tint:#3d4ae0;--acc:#3340d6;--bar:rgba(255,255,255,.92)}}
+html{font-size:calc(16px*var(--z,1))}
+body{font-size:1rem;color:var(--tx);background:var(--bg) radial-gradient(var(--ln) 1px,transparent 1px) 0 0/22px 22px;background-attachment:fixed}
+.gl{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--bd);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.bar,#toast{background:var(--bar);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 12px 30px -10px rgba(0,0,0,.45)}
+.grp,.pop{border-radius:18px}
+.sec{color:var(--mu);font-size:.85rem;font-weight:700;letter-spacing:.02em}
+.cap{font-size:.8rem}
+.chip{background:var(--chip);color:var(--tx)}
+.seg{background:var(--chip)}
+.sg{color:var(--tx)}
+.sg.on{background:var(--segon);box-shadow:0 1px 4px rgba(0,0,0,.22)}
+.row.on{background:var(--sel)}
+.row.on::after{background:var(--acc)}
+@media(hover:hover){.row:hover{background:var(--hov)}.row.on:hover{background:var(--sel)}}
+.tb.on{background:var(--sel);color:var(--acc)}
+.sym{background:var(--chip);color:var(--tx)}.sym:hover{background:var(--hov);outline:2px solid var(--acc)}
+.dc{box-shadow:0 10px 28px -14px rgba(0,0,0,.6)}
+.dc-cat,.dc-ch{color:#b5bac1}.dc-ch .ic{color:#949ba4}.dc-ch.act{color:#fff}
+.sw{background:#6b7184}
 </style>
 </head>
 <body>
@@ -128,20 +159,23 @@ input[type=text]::placeholder{color:var(--mu)}
 <symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="6.5" rx="2.2"/><rect x="3.5" y="13.5" width="17" height="6.5" rx="2.2"/><path d="M7.5 7.25h.01M7.5 16.75h.01" stroke-width="2.8"/></symbol>
 <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3l4.5-3.8v12.6L7 14.5H4z"/><path d="M15 9.2c1.3 1.5 1.3 4.1 0 5.6M17.8 6.8c2.6 3 2.6 7.4 0 10.4"/></symbol>
 </defs></svg>
-<div class="au" aria-hidden="true"><i></i><i></i><i></i></div>
+
 <main>
   <header>
     <h1>Symbol Forge</h1>
     <div class="hb">
       <button class="gl rd" id="rnd" type="button" aria-label="Ngẫu nhiên"><svg class="ic"><use href="#i-shuffle"/></svg></button>
-      <button class="gl rd" id="gear" type="button" aria-label="Liquid Glass"><svg class="ic"><use href="#i-sliders"/></svg></button>
+      <button class="gl rd" id="gear" type="button" aria-label="Giao diện & cỡ chữ"><svg class="ic"><use href="#i-sliders"/></svg></button>
     </div>
   </header>
   <div class="gl pop" id="pop" hidden>
-    <div><span>Liquid Glass</span><span>Trong ↔ Mờ</span></div>
-    <input type="range" id="glass" min="0" max="100" value="35" aria-label="Độ kính">
+    <div class="cap0">Giao diện</div>
+    <div class="seg" id="themeSeg" style="margin:8px 0 16px"></div>
+    <div class="cap0"><span>Cỡ chữ</span><span id="zv">100%</span></div>
+    <input type="range" id="zoom" min="90" max="140" value="100" aria-label="Cỡ chữ">
   </div>
 
+  <p class="how"><b>1</b> Nhập tên · <b>2</b> Chọn style · <b>3</b> Chạm để sao chép</p>
   <div class="lay">
   <aside><div class="dc" aria-label="Xem trước">
     <div class="rail"><b class="sv a" style="background:#5e5ce6">S</b><b class="sv" style="background:#30d158">G</b><b class="sv" style="background:#ff9f0a">M</b><b class="sv" style="background:#3a3d44">+</b></div>
@@ -155,12 +189,19 @@ input[type=text]::placeholder{color:var(--mu)}
     <label class="fld"><i class="tile" style="background:#0a84ff"><svg class="ic"><use href="#i-hash"/></svg></i><span>Tên kênh</span><input type="text" id="ch" value="thông báo" autocomplete="off"></label>
     <label class="fld"><i class="tile" style="background:#ff9f0a"><svg class="ic"><use href="#i-smile"/></svg></i><span>Emoji</span><input type="text" id="emo" value="📢" autocomplete="off"></label>
     <label class="fld"><i class="tile" style="background:#bf5af2"><svg class="ic"><use href="#i-folder"/></svg></i><span>Danh mục</span><input type="text" id="cat" value="Cộng đồng" autocomplete="off"></label>
-    <div class="scroll" id="fonts" aria-label="Kiểu chữ"></div>
-    <div class="fld" style="border-bottom:0;border-top:1px solid var(--ln)"><span id="ntl" style="flex:1">Bỏ dấu</span><input type="checkbox" class="sw" id="nt" aria-labelledby="ntl"></div>
-    <div class="seg" id="cases" aria-label="Chữ hoa"></div>
-    <div class="scroll" id="pick" hidden aria-label="Chọn chữ in hoa"></div>
-    <p class="note">Font đặc biệt không có chữ có dấu nên chữ có dấu giữ kiểu thường. Bật “Bỏ dấu” để đổi cả câu.</p>
-    <p class="note">Discord tự đổi tên kênh chat thành chữ thường. Chữ hoa chỉ giữ được ở kênh thoại, hoặc khi dùng font đặc biệt như 𝐁𝐨𝐥𝐝. Ở chế độ “Tự chọn”, chạm vào từng chữ để in hoa.</p>
+    <details class="opt" id="opt">
+      <summary><span>Tùy chỉnh kiểu chữ</span><em id="optSum"></em></summary>
+      <p class="cap">Font</p>
+      <div class="scroll" id="fonts" aria-label="Kiểu chữ"></div>
+      <p class="cap">Chữ hoa</p>
+      <div class="seg" id="cases" aria-label="Chữ hoa"></div>
+      <div class="scroll" id="pick" hidden aria-label="Chọn chữ in hoa"></div>
+      <p class="cap">Font chữ cái đầu (style in đậm chữ đầu)</p>
+      <div class="scroll" id="flrow" aria-label="Font chữ đầu"></div>
+      <div class="fld" style="border-top:1px solid var(--ln);border-bottom:0"><span id="ntl" style="flex:1">Bỏ dấu tiếng Việt</span><input type="checkbox" class="sw" id="nt" aria-labelledby="ntl"></div>
+      <p class="note">Font đặc biệt không có chữ có dấu, hãy bật “Bỏ dấu” để đổi cả câu. Discord tự đổi tên kênh chat thành chữ thường, chữ hoa chỉ giữ ở kênh thoại hoặc font đặc biệt.</p>
+      <div style="padding:0 16px 14px"><button class="chip" id="reset" type="button">Đặt lại mặc định</button></div>
+    </details>
   </div>
 
   <section class="tab on" id="t0">
@@ -207,10 +248,15 @@ const $ = id => document.getElementById(id);
 const FONTS = {
   normal:{label:"Thường"},
   bold:{label:"𝐁𝐨𝐥𝐝",u:0x1D400,l:0x1D41A},
+  bolditalic:{label:"𝑩𝒐𝒍𝒅 𝑰",u:0x1D468,l:0x1D482},
   script:{label:"𝓢𝓬𝓻𝓲𝓹𝓽",u:0x1D4D0,l:0x1D4EA},
   fraktur:{label:"𝕱𝖗𝖆𝖐𝖙𝖚𝖗",u:0x1D56C,l:0x1D586},
+  double:{label:"𝔻𝕠𝕦𝕓𝕝𝕖",u:0x1D538,l:0x1D552,ex:{C:"ℂ",H:"ℍ",N:"ℕ",P:"ℙ",Q:"ℚ",R:"ℝ",Z:"ℤ"}},
   sans:{label:"𝗦𝗮𝗻𝘀",u:0x1D5D4,l:0x1D5EE},
+  sansi:{label:"𝙎𝙖𝙣𝙨 𝙄",u:0x1D63C,l:0x1D656},
   mono:{label:"𝙼𝚘𝚗𝚘",u:0x1D670,l:0x1D68A},
+  circled:{label:"Ⓒⓘⓡⓒⓛⓔ",u:0x24B6,l:0x24D0},
+  wide:{label:"Ｗｉｄｅ",u:0xFF21,l:0xFF41},
   small:{label:"ꜱᴍᴀʟʟ"}
 };
 const SC = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ";
@@ -219,15 +265,16 @@ function conv(s, k){
   if(!f || k === "normal") return s;
   return [...s.normalize("NFC")].map(c=>{
     if(k === "small") return /[a-z]/.test(c) ? SC[c.charCodeAt(0)-97] : c;
-    if(/[A-Z]/.test(c)) return String.fromCodePoint(f.u + c.charCodeAt(0) - 65);
-    if(/[a-z]/.test(c)) return String.fromCodePoint(f.l + c.charCodeAt(0) - 97);
+    if(/[A-Z]/.test(c)) return (f.ex && f.ex[c]) || String.fromCodePoint(f.u + c.charCodeAt(0) - 65);
+    if(/[a-z]/.test(c)) return (f.ex && f.ex[c]) || String.fromCodePoint(f.l + c.charCodeAt(0) - 97);
     return c;
   }).join("");
 }
 const nt = s => noTone ? s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D") : s;
 const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 const slug = s => s.trim().toLowerCase().replace(/\s+/g, "-");
-const boldFirst = s => s ? conv(s[0], "bold") + s.slice(1) : s;
+let fl = "bold";
+const boldFirst = s => s ? conv(s[0], fl) + s.slice(1) : s;
 
 // ---- Style tên kênh (b:1 = in đậm chữ đầu) – thêm style của bạn ở đây ----
 const CH = [
@@ -346,7 +393,9 @@ function render(){
   const mk = (txt, on, fn) => { const b = document.createElement("button"); b.type="button"; b.className="chip"+(on?" on":""); b.textContent=txt; b.onclick=fn; return b; };
   const sg = (t,o,f) => { const b = mk(t,o,f); b.className = "sg" + (o ? " on" : ""); return b; };
   $("fonts").replaceChildren(...Object.keys(FONTS).map(k=>mk(FONTS[k].label, k===font, ()=>{font=k;render()})));
+  $("flrow").replaceChildren(...Object.keys(FONTS).filter(k=>k!=="normal"&&k!=="small").map(k=>mk(conv("Aa",k), k===fl, ()=>{fl=k;render()})));
   $("nt").checked = noTone;
+  $("optSum").textContent = [FONTS[font].label, CASES.find(c=>c[0]===mode)[1], noTone ? "Bỏ dấu" : ""].filter(Boolean).join(" · ");
   $("cases").replaceChildren(...CASES.map(([k,l])=>sg(l, k===mode, ()=>{ mode=k; if(k==="custom" && !caps.size) caps.add(0); render(); })));
   const pk = $("pick"); pk.hidden = mode !== "custom";
   if(mode === "custom") pk.replaceChildren(...[...slug(nt(raw))].map((c,i)=>{
@@ -408,15 +457,23 @@ document.querySelectorAll(".tb").forEach(b => b.onclick = () => {
   document.querySelectorAll(".tab").forEach((t,i) => t.classList.toggle("on", i == b.dataset.t));
   scrollTo({top:0, behavior:"smooth"});
 });
-function glass(v){
-  const r = document.documentElement.style;
-  r.setProperty("--ga", (.05 + v*.0024).toFixed(3)); r.setProperty("--gb", (16 + v*.24) + "px");
+const TH = [["auto","Tự động"],["dark","Tối"],["light","Sáng"]];
+let prefs = {theme:"auto", z:100};
+try{ Object.assign(prefs, JSON.parse(localStorage.getItem("prefs") || "{}")); }catch(_){}
+const savePrefs = () => { try{ localStorage.setItem("prefs", JSON.stringify(prefs)); }catch(_){} };
+function applyPrefs(){
+  const r = document.documentElement;
+  r.dataset.theme = prefs.theme; r.style.setProperty("--z", prefs.z/100);
+  $("zoom").value = prefs.z; $("zv").textContent = prefs.z + "%";
+  $("themeSeg").replaceChildren(...TH.map(([k,l])=>{
+    const b = document.createElement("button"); b.type = "button"; b.className = "sg" + (k === prefs.theme ? " on" : ""); b.textContent = l;
+    b.onclick = () => { prefs.theme = k; savePrefs(); applyPrefs(); };
+    return b;
+  }));
 }
-$("glass").oninput = e => { glass(+e.target.value); try{localStorage.setItem("glass", e.target.value)}catch(_){} };
-$("nt").onchange = e => { noTone = e.target.checked; render(); };
+$("zoom").oninput = e => { prefs.z = +e.target.value; savePrefs(); applyPrefs(); };
 $("gear").onclick = () => $("pop").hidden = !$("pop").hidden;
-try{ const g = localStorage.getItem("glass"); if(g !== null) $("glass").value = g; }catch(_){}
-glass(+$("glass").value);
+applyPrefs();
 
 // ---- Ngẫu nhiên ----
 $("rnd").onclick = e => {
