@@ -3,487 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#05050a">
-<title>Symbol Forge – Tên kênh & danh mục Discord</title>
+<title>Symbol Forge & Webhook Studio – Công cụ thiết kế server Discord</title>
+<meta name="description" content="Tạo tên kênh, danh mục đẹp, thiết kế cả server Discord và gửi tin nhắn webhook với Embed & Container. Miễn phí, chạy ngay trên trình duyệt.">
+<meta property="og:title" content="Symbol Forge & Webhook Studio">
+<meta property="og:description" content="Bộ công cụ miễn phí để thiết kế server Discord và gửi webhook Embed & Container.">
 <style>
-:root{--bg:#05050a;--tx:#fff;--mu:#9a9aa8;--ln:rgba(255,255,255,.1);--tint:#0a84ff;--ga0:0;--ga:.15;--gb:24px}
-@media(prefers-color-scheme:light){:root{--bg:#eceefc;--tx:#111118;--mu:#6b6b78;--ln:rgba(0,0,0,.09);--ga0:.42}}
+:root{--bg:#0a0c13;--card:#121624;--chip:#1b2135;--bd:#262d45;--tx:#f4f6ff;--mu:#aab2cd;--acc:#a5b4ff;--tint:#5563f5;--bar:rgba(10,12,19,.8);--grad:linear-gradient(135deg,#5b4bff,#b72bd0);--g2:linear-gradient(95deg,#8ea2ff,#e879f9 55%,#ff8fb1)}
+@media(prefers-color-scheme:light){:root{--bg:#f3f4fb;--card:#fff;--chip:#eceef8;--bd:#dcdff0;--tx:#12142a;--mu:#52587a;--acc:#3a46d8;--tint:#4452e6;--bar:rgba(243,244,251,.85);--g2:linear-gradient(95deg,#4a3df0,#b72bd0 55%,#e0457b)}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
 html,body{max-width:100%;overflow-x:hidden}
-body{margin:0;color:var(--tx);font:16px/1.4 -apple-system,"SF Pro Text",system-ui,"Segoe UI",sans-serif;min-height:100vh;
-  background:radial-gradient(60% 40% at 15% 5%,#5e5ce6bb,transparent),radial-gradient(50% 40% at 95% 25%,#ff375f88,transparent),radial-gradient(70% 50% at 25% 100%,#30d1ac77,transparent),radial-gradient(40% 30% at 90% 90%,#0a84ff77,transparent),var(--bg);background-attachment:fixed}
-main{max-width:560px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 16px 130px}
-.gl{background:rgba(255,255,255,calc(var(--ga) + var(--ga0)));-webkit-backdrop-filter:blur(var(--gb)) saturate(1.9);backdrop-filter:blur(var(--gb)) saturate(1.9);
-  border:1px solid rgba(255,255,255,.17);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 34px -14px rgba(0,0,0,.55)}
-header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 14px}
-h1{margin:0;font-size:2.1rem;font-weight:800;letter-spacing:-.03em}
-.hb{display:flex;gap:8px}
-.rd{width:42px;height:42px;border-radius:50%;font-size:1.1rem;color:var(--tx);cursor:pointer;display:grid;place-items:center}
-.rd:active,.tb:active,.row:active{transform:scale(.96)}
-.pop{border-radius:22px;padding:14px 16px;margin-bottom:14px}
-.pop[hidden]{display:none}
-.cap0{display:flex;justify-content:space-between;color:var(--mu);font-size:.85rem;font-weight:600}
-input[type=range]{width:100%;accent-color:var(--tint);margin:8px 0 0}
-.sec{margin:20px 4px 8px;color:var(--mu);font-size:.8rem;font-weight:600}
-.dc{background:#2b2d31;color:#f2f3f5;border-radius:24px;overflow:hidden;font-family:"Segoe UI",system-ui,sans-serif;box-shadow:0 24px 60px -22px #5e5ce6;border:1px solid rgba(255,255,255,.1)}
-.dc-h{display:flex;justify-content:space-between;padding:13px 16px;font-weight:700;border-bottom:1px solid #1e1f22}
-.dc-cat{padding:14px 12px 4px 14px;color:#949ba4;font-size:.76rem;font-weight:700;word-break:break-all}
-.dc-ch{display:flex;gap:7px;margin:2px 8px;padding:6px 8px;border-radius:6px;color:#949ba4;word-break:break-all}
-.dc-ch.act{background:#404249;color:#fff}
-.dc-ch:last-child{margin-bottom:12px}
-.grp{border-radius:22px;overflow:hidden}
-.fld{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--ln)}
-.fld:last-of-type{border-bottom:0}
-.fld span{flex:0 0 78px;font-weight:600}
-input[type=text]{flex:1;min-width:0;background:none;border:0;color:var(--tx);font:inherit;text-align:right;outline:0}
-input[type=text]::placeholder{color:var(--mu)}
-.scroll{display:flex;gap:8px;overflow-x:auto;padding:10px 16px 12px;scrollbar-width:none;border-top:1px solid var(--ln)}
-.scroll::-webkit-scrollbar{display:none}
-.scroll[hidden]{display:none}
-#pick{flex-wrap:wrap;overflow:visible}
-.lt{width:38px;padding:7px 0;text-align:center}
-.chip{flex:none;background:rgba(255,255,255,.1);border:0;border-radius:99px;padding:7px 14px;color:var(--tx);font:inherit;font-size:.9rem;cursor:pointer}
-.chip.on{background:var(--tint);color:#fff;font-weight:600}
-.note{color:var(--mu);font-size:.78rem;padding:0 16px 12px}
-.tab{display:none}.tab.on{display:block}
-.row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--ln);color:var(--tx);font:inherit;padding:14px 16px;cursor:pointer;transition:transform .12s}
-.row:last-child{border-bottom:0}
-.row .v{flex:1;min-width:0;word-break:break-all}
-.row small{color:var(--mu);white-space:nowrap}
-.row.on::after{content:"✓";color:var(--tint);font-weight:800}
-.tray{display:flex;gap:8px;padding:12px 16px;align-items:center}
-.btn{background:var(--tint);color:#fff;border:0;border-radius:99px;padding:8px 18px;font:inherit;font-weight:600;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));grid-auto-flow:dense;gap:8px;padding:4px 14px 16px}
-.sym{height:46px;border-radius:14px;background:rgba(255,255,255,.09);border:0;color:var(--tx);font-size:1.2rem;cursor:pointer;padding:0 4px;white-space:nowrap;overflow:hidden;transition:transform .12s,background .12s}
-.sym:hover{background:rgba(255,255,255,.2)}.sym:active{transform:scale(.9)}
-.w2{grid-column:span 2}.w3{grid-column:span 3}
-.bar{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:2px;padding:6px;border-radius:99px;z-index:5;width:min(440px,calc(100% - 32px))}
-.tb{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;border-radius:99px;padding:7px 4px;color:var(--mu);font:inherit;font-size:.68rem;font-weight:600;cursor:pointer}
-.tb i{font-style:normal;font-size:1.25rem;line-height:1.2}
-.tb.on{background:rgba(255,255,255,.2);color:var(--tint)}
-#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;padding:9px 18px;border-radius:99px;font-weight:600;transition:.2s;pointer-events:none;max-width:88vw;word-break:break-all;z-index:9}
-#toast.on{transform:translate(-50%,0);opacity:1}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-
-.ic{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.tile{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;color:#fff;font-style:normal}
-.tile .ic{width:18px;height:18px;stroke-width:2.1}
-.rd .ic{width:22px;height:22px}
-.tb .ic{width:26px;height:26px}.tb.on .ic{stroke-width:2.4}
-.btn{display:inline-flex;align-items:center;gap:6px}.btn .ic{width:16px;height:16px;stroke-width:2.3}
-.chip .ic{width:13px;height:13px;vertical-align:-2px;margin-right:5px;stroke-width:2.6}
-.row.on::after{content:"";width:20px;height:20px;background:var(--tint);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
-.sw{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;border-radius:99px;background:rgba(120,120,128,.36);position:relative;cursor:pointer;transition:background .25s;margin:0}
-.sw::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.3);transition:transform .25s}
-.sw:checked{background:#30d158}.sw:checked::after{transform:translateX(20px)}
-.seg{display:flex;gap:2px;margin:10px 16px 12px;padding:2px;border-radius:10px;background:rgba(120,120,128,.28)}
-#pick{border-top:1px solid var(--ln)}
-.sg{flex:1;min-width:0;border:0;background:none;color:var(--tx);font:inherit;font-size:.8rem;font-weight:600;padding:7px 2px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .2s}
-.sg.on{background:rgba(255,255,255,.24);box-shadow:0 2px 6px rgba(0,0,0,.25)}
-@media(prefers-color-scheme:light){.sg.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
-
-@media(prefers-color-scheme:light){@media(prefers-reduced-motion:reduce){.dc{display:flex}
-.rail{flex:none;width:58px;background:#1e1f22;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0}
-.sv{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;transition:border-radius .2s}
-.sv.a{border-radius:14px}.sv:hover{border-radius:14px}
-.side{flex:1;min-width:0;display:flex;flex-direction:column}
-#pv{overflow-y:auto;max-height:310px;overscroll-behavior:contain}
-.dc-cat,.dc-ch{cursor:pointer}.dc-ch{align-items:center}
-.dc-ch:hover:not(.act){background:#35373c;color:#dbdee1}
-.dc-ch .ic{width:18px;height:18px;stroke-width:2;color:#80848e}
-.dc-copy{display:flex;align-items:center;justify-content:center;gap:7px;margin:4px 10px 10px;padding:10px;border:0;border-radius:10px;background:var(--tint);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-.dc-copy .ic{width:17px;height:17px;stroke-width:2.2}
-.lay{display:block}.col{min-width:0}
-@media(hover:hover){.row:hover{background:rgba(255,255,255,.07)}}
-@media(min-width:900px){
-  main{max-width:1140px;padding-top:28px}
-  h1{font-size:2.8rem}
-  .lay{display:grid;grid-template-columns:390px minmax(0,1fr);gap:28px;align-items:start}
-  aside{position:sticky;top:20px}
-  #pv{max-height:calc(100vh - 250px)}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(58px,1fr))}
-  .sec{margin-top:4px}.sec:not(:first-child){margin-top:22px}
+body{margin:0;color:var(--tx);background:var(--bg);font:1rem/1.55 -apple-system,"SF Pro Text","Segoe UI",system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+/* nền */
+.bgfx{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bgfx i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.3;animation:fl 30s ease-in-out infinite alternate}
+.bgfx i:nth-child(1){background:#5b4bff;left:-20vmax;top:-22vmax}
+.bgfx i:nth-child(2){background:#d946ef;right:-26vmax;top:20vh;opacity:.2;animation-delay:-11s}
+.bgfx i:nth-child(3){background:#22d3ee;left:15vw;bottom:-36vmax;opacity:.15;animation-delay:-19s}
+@keyframes fl{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+@media(prefers-color-scheme:light){.bgfx i{opacity:.14!important}}
+/* thanh trên */
+nav.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:var(--bar);border-bottom:1px solid var(--bd)}
+nav.top .wrap{display:flex;align-items:center;gap:18px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:var(--grad);color:#fff;box-shadow:0 8px 20px -8px #b72bd0}
+.links{display:flex;gap:4px;margin-left:auto}
+.links a{padding:8px 13px;border-radius:99px;color:var(--mu);font-weight:600;font-size:.92rem;transition:background .2s,color .2s}
+.links a:hover{background:var(--chip);color:var(--tx)}
+.pill{padding:9px 16px;border-radius:99px;background:var(--chip);font-weight:700;font-size:.9rem;white-space:nowrap}
+.pill.on,.btn{background:var(--grad);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:99px;font-weight:700;box-shadow:0 14px 30px -14px #b72bd0;transition:transform .2s cubic-bezier(.2,1.4,.4,1),box-shadow .2s}
+.btn:hover{transform:translateY(-3px) scale(1.03)}.btn:active{transform:scale(.97)}
+.btn.alt{background:var(--card);color:var(--tx);border:1px solid var(--bd);box-shadow:none}
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:72px 0 56px}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;background:var(--chip);border:1px solid var(--bd);font-size:.85rem;font-weight:600;color:var(--mu)}
+.tag::before{content:"";width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 0 4px #34d39933}
+h1{margin:18px 0 16px;font-size:clamp(2.3rem,6vw,4.3rem);line-height:1.04;letter-spacing:-.035em;font-weight:800}
+h1 em{font-style:normal;background:var(--g2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin:0 0 28px;max-width:540px;color:var(--mu);font-size:1.1rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.mini{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--mu);font-size:.88rem}
+.mini span::before{content:"✓ ";color:#34d399;font-weight:800}
+/* mock */
+.vis{position:relative;height:440px}
+.mock{position:absolute;background:#2b2d31;color:#dbdee1;border:1px solid #3f4147;border-radius:18px;font:14px/1.4 "Segoe UI",system-ui,sans-serif;box-shadow:0 30px 60px -24px rgba(0,0,0,.7)}
+.dc{left:0;top:10px;width:300px;overflow:hidden;animation:bob 7s ease-in-out infinite}
+.dc .h{display:flex;justify-content:space-between;padding:12px 16px;font-weight:700;color:#f2f3f5;border-bottom:1px solid #1e1f22}
+.dc .c{padding:14px 14px 4px;color:#b5bac1;font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc .r{display:flex;gap:7px;margin:2px 8px;padding:6px 8px;border-radius:6px;color:#b5bac1;white-space:nowrap;overflow:hidden}
+.dc .r.a{background:#404249;color:#fff}.dc .r span:first-child{color:#80848e}
+.dc .sw{transition:opacity .22s}.dc .sw.o{opacity:0}
+.dc .b{margin:12px;padding:6px 12px;border-radius:99px;background:#5865f222;color:#a5b4ff;font-size:.78rem;font-weight:700;text-align:center}
+.wh{right:0;top:120px;width:340px;padding:14px;background:#313338;animation:bob 8s ease-in-out -3s infinite}
+.wh .m{display:flex;gap:11px}.wh .av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:800;flex:none}
+.wh .u{font-weight:600;color:#f2f3f5}.wh .t{background:#5865f2;color:#fff;font-size:.6rem;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:6px;vertical-align:2px}
+.em{margin-top:6px;background:#2b2d31;border-left:4px solid #a855f7;border-radius:4px;padding:8px 12px 10px}
+.em b{color:#f2f3f5}.em small{display:block;color:#949ba4;margin-top:6px}
+.ef{display:flex;gap:22px;margin-top:6px;font-size:.85rem}.ef div b{display:block;font-size:.8rem}
+.ct{margin-top:8px;background:#2b2d31;border:1px solid #3f4147;border-left:4px solid #5865f2;border-radius:8px;padding:10px 12px}
+.ct .lb{display:inline-block;margin-top:8px;background:#4e5058;color:#fff;border-radius:6px;padding:5px 12px;font-size:.82rem}
+@keyframes bob{50%{transform:translateY(-12px)}}
+/* khối chung */
+section{padding:64px 0}
+.eyebrow{color:var(--acc);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+h2{margin:8px 0 12px;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.12;letter-spacing:-.025em;font-weight:800}
+.sub{margin:0 0 36px;color:var(--mu);max-width:620px;font-size:1.05rem}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:6px 0 10px}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px 14px;text-align:center}
+.st b{display:block;font-size:2.1rem;font-weight:800;letter-spacing:-.03em;background:var(--g2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.st span{color:var(--mu);font-size:.88rem;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.big{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--bd);border-radius:28px;padding:30px;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.big:hover{transform:translateY(-6px);border-color:var(--acc)}
+.big::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:var(--grad);opacity:.16;filter:blur(30px)}
+.big h3{margin:12px 0 8px;font-size:1.6rem;letter-spacing:-.02em}
+.big p{margin:0 0 16px;color:var(--mu)}
+.big ul{margin:0 0 24px;padding:0;list-style:none;display:grid;gap:8px}
+.big li::before{content:"✦ ";color:var(--acc)}
+.ic{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:var(--grad);color:#fff;font-size:1.5rem;box-shadow:0 12px 24px -12px #b72bd0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:26px}
+.step i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--grad);color:#fff;font-style:normal;font-weight:800;margin-bottom:14px}
+.step h3{margin:0 0 6px;font-size:1.2rem}.step p{margin:0;color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.f{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:22px;transition:transform .25s,border-color .25s}
+.f:hover{transform:translateY(-4px);border-color:var(--acc)}
+.f span{font-size:1.6rem}.f h3{margin:10px 0 4px;font-size:1.08rem}.f p{margin:0;color:var(--mu);font-size:.93rem}
+/* marquee */
+.mq{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq+.mq{margin-top:12px}
+.tr{display:flex;gap:12px;width:max-content;animation:mq 45s linear infinite}
+.mq.rv2 .tr{animation-direction:reverse;animation-duration:55s}
+.mq:hover .tr{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+.tr span{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 18px;font-size:1.05rem;white-space:nowrap}
+/* faq */
+.faq{max-width:780px;display:grid;gap:10px}
+details{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:0 20px;transition:border-color .2s}
+details[open]{border-color:var(--acc)}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:700;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--acc);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0 0 18px;color:var(--mu)}
+.final{text-align:center;background:var(--grad);border-radius:32px;padding:56px 24px;color:#fff;position:relative;overflow:hidden}
+.final h2{margin:0 0 10px}.final p{margin:0 auto 26px;max-width:520px;opacity:.92}
+.final .btn{background:#fff;color:#3b2fd1;box-shadow:0 14px 30px -14px #000}
+.final .btn.alt{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.4)}
+.final .cta{justify-content:center}
+footer{padding:36px 0 50px;color:var(--mu);font-size:.88rem;text-align:center}
+footer a{color:var(--acc);font-weight:600;margin:0 6px}
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:40px}
+  .vis{height:430px;max-width:420px;margin:0 auto;width:100%}
+  .dc{width:min(300px,78%)}.wh{width:min(330px,88%)}
+  .stats{grid-template-columns:repeat(2,1fr)}.stats .st:last-child{grid-column:1/-1}
+  .two,.steps{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}
+  .links{display:none}nav.top .wrap{justify-content:space-between}.pills{margin-left:auto}
 }
-
-.how{margin:-4px 4px 14px;color:var(--mu);font-size:.88rem}
-.how b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--tint);color:#fff;font-size:.72rem;margin-right:2px}
-.opt summary{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none;border-top:1px solid var(--ln)}
-.opt summary::-webkit-details-marker{display:none}
-.opt summary span{flex:1;font-weight:600}
-.opt summary em{font-style:normal;color:var(--mu);font-size:.85rem;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.opt summary::after{content:"";width:8px;height:8px;border-right:2.5px solid var(--mu);border-bottom:2.5px solid var(--mu);transform:rotate(-45deg);transition:transform .2s;flex:none}
-.opt[open] summary::after{transform:rotate(45deg)}
-.opt .scroll{border-top:0;padding:4px 16px 10px}
-.opt #pick{padding-top:0}
-.cap{margin:12px 16px 2px;color:var(--mu);font-size:.75rem;font-weight:600}
-.chip{padding:9px 15px}.sg{padding:9px 2px}
-#pv{max-height:200px!important}
-@media(min-width:900px){#pv{max-height:calc(100vh - 250px)!important}}
-
-/* ===== Giao diện mới: nền đặc, chữ tương phản cao ===== */
-:root{--bg:#0f1115;--card:#1a1d24;--bd:#2c313c;--tx:#f5f6fa;--mu:#b3b9c9;--ln:#2c313c;--chip:#2a2f3b;--sel:#262d4d;--hov:#222733;--segon:#4a5166;--tint:#4f5df5;--acc:#a9b2ff;--bar:rgba(26,29,36,.92)}
-:root[data-theme=light]{--bg:#f1f2f7;--card:#fff;--bd:#dcdfe8;--tx:#13151c;--mu:#555b6c;--ln:#e3e6ee;--chip:#e8eaf1;--sel:#e8ebff;--hov:#f3f4f9;--segon:#fff;--tint:#3d4ae0;--acc:#3340d6;--bar:rgba(255,255,255,.92)}
-@media(prefers-color-scheme:light){:root:not([data-theme=dark]):not([data-theme=light]){--bg:#f1f2f7;--card:#fff;--bd:#dcdfe8;--tx:#13151c;--mu:#555b6c;--ln:#e3e6ee;--chip:#e8eaf1;--sel:#e8ebff;--hov:#f3f4f9;--segon:#fff;--tint:#3d4ae0;--acc:#3340d6;--bar:rgba(255,255,255,.92)}}
-html{font-size:calc(16px*var(--z,1))}
-body{font-size:1rem;color:var(--tx);background:var(--bg) radial-gradient(var(--ln) 1px,transparent 1px) 0 0/22px 22px;background-attachment:fixed}
-.gl{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--bd);box-shadow:0 1px 2px rgba(0,0,0,.15)}
-.bar,#toast{background:var(--bar);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 12px 30px -10px rgba(0,0,0,.45)}
-.grp,.pop{border-radius:18px}
-.sec{color:var(--mu);font-size:.85rem;font-weight:700;letter-spacing:.02em}
-.cap{font-size:.8rem}
-.chip{background:var(--chip);color:var(--tx)}
-.seg{background:var(--chip)}
-.sg{color:var(--tx)}
-.sg.on{background:var(--segon);box-shadow:0 1px 4px rgba(0,0,0,.22)}
-.row.on{background:var(--sel)}
-.row.on::after{background:var(--acc)}
-@media(hover:hover){.row:hover{background:var(--hov)}.row.on:hover{background:var(--sel)}}
-.tb.on{background:var(--sel);color:var(--acc)}
-.sym{background:var(--chip);color:var(--tx)}.sym:hover{background:var(--hov);outline:2px solid var(--acc)}
-.dc{box-shadow:0 10px 28px -14px rgba(0,0,0,.6)}
-.dc-cat,.dc-ch{color:#b5bac1}.dc-ch .ic{color:#949ba4}.dc-ch.act{color:#fff}
-.sw{background:#6b7184}
+@media(max-width:560px){.grid{grid-template-columns:1fr}md-text-button.hide{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
 </style>
+<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
+<script type="importmap">{"imports":{"@material/web/":"https://esm.run/@material/web@2/"}}</script>
+<script type="module" src="assets/md3-web.js"></script>
+<script src="assets/md3.js"></script>
+<link rel="stylesheet" href="assets/md3.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<symbol id="i-hash" viewBox="0 0 24 24"><path d="M9.5 3.5 7.5 20.5M16.5 3.5l-2 17M4 9h16.5M3.5 15h16.5"/></symbol>
-<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2.5h7.5A2.5 2.5 0 0 1 21 10v7.5a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></symbol>
-<symbol id="i-spark" viewBox="0 0 24 24"><path d="M10 4.5l1.7 4.3 4.3 1.7-4.3 1.7L10 16.5l-1.7-4.3L4 10.5l4.3-1.7z"/><path d="M18.2 14.5l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z"/></symbol>
-<symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.3c.9 1.3 2 1.9 3.5 1.9s2.6-.6 3.5-1.9"/><path d="M9 9.6v.6M15 9.6v.6" stroke-width="2.6"/></symbol>
-<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c2 0 3.2 1 4.3 2.6l2.4 3.8c1.1 1.6 2.3 2.6 4.3 2.6H21M3 17h3.5c1.4 0 2.4-.5 3.3-1.4M13.5 8.4C14.5 7.5 15.6 7 17 7h4M18.5 4.5 21 7l-2.5 2.5M18.5 14.5 21 17l-2.5 2.5"/></symbol>
-<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M3.5 7h9.2M17.3 7h3.2M3.5 17h3.2M11.3 17h9.2"/><circle cx="15" cy="7" r="2.3"/><circle cx="9" cy="17" r="2.3"/></symbol>
-<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2.8"/><path d="M15.5 8.5V6A2.5 2.5 0 0 0 13 3.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></symbol>
-<symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
-<symbol id="i-checkc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" stroke="none"/><path d="M7.5 12.5l3 3 6-6.5" stroke="#fff" stroke-width="2.4"/></symbol>
-<symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="6.5" rx="2.2"/><rect x="3.5" y="13.5" width="17" height="6.5" rx="2.2"/><path d="M7.5 7.25h.01M7.5 16.75h.01" stroke-width="2.8"/></symbol>
-<symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3l4.5-3.8v12.6L7 14.5H4z"/><path d="M15 9.2c1.3 1.5 1.3 4.1 0 5.6M17.8 6.8c2.6 3 2.6 7.4 0 10.4"/></symbol>
-</defs></svg>
+<div class="bgfx" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="top"><div class="wrap">
+  <a class="logo" href="./"><b>✦</b><span>Symbol Forge</span></a>
+  <div class="links"><a href="#tools">Công cụ</a><a href="#how">Cách dùng</a><a href="#features">Tính năng</a><a href="#faq">Hỏi đáp</a></div>
+  <div class="pills" style="display:flex;gap:8px;align-items:center" data-md3-slot><md-text-button class="hide" href="design/">/design</md-text-button><md-filled-tonal-button href="webhook/">/webhook</md-filled-tonal-button></div>
+</div></nav>
+
+<header class="wrap hero">
+  <div>
+    <span class="tag rv">Miễn phí · Chạy ngay trên trình duyệt</span>
+    <h1 class="rv d1">Thiết kế server Discord <em>đẹp hơn</em>, gửi webhook <em>xịn hơn</em></h1>
+    <p class="lead rv d2">Tạo tên kênh và danh mục bằng hàng trăm symbol, dựng cả server từ mẫu có sẵn, rồi soạn tin nhắn Embed hay Container với bản xem trước giống hệt Discord.</p>
+    <div class="cta rv d3"><md-filled-button href="design/">✦ Mở /design</md-filled-button><md-filled-tonal-button href="webhook/">⚡ Mở /webhook</md-filled-tonal-button></div>
+    <div class="mini rv d3"><span>Không cần đăng nhập</span><span>Dùng tốt trên điện thoại & PC</span><span>Dữ liệu ở lại máy bạn</span></div>
+  </div>
+  <div class="vis" aria-hidden="true">
+    <div class="mock dc">
+      <div class="h"><span>Server của bạn</span><span>⌄</span></div>
+      <div class="c sw" id="mc">⌄ ━━━━━━☾「 CỘNG ĐỒNG 」☽━━━━━━</div>
+      <div class="r a"><span>#</span><span class="sw">📢・thông-báo</span></div>
+      <div class="r"><span>#</span><span class="sw">📜・luật-lệ</span></div>
+      <div class="r"><span>#</span><span class="sw">💬・trò-chuyện</span></div>
+      <div class="r"><span>🔊</span><span class="sw">🎮・Game</span></div>
+      <div class="b" id="mb">Style: Chấm giữa</div>
+    </div>
+    <div class="mock wh">
+      <div class="m"><div class="av">W</div><div style="min-width:0;flex:1">
+        <div><span class="u">Webhook Studio</span><span class="t">APP</span></div>
+        <div class="em"><b>🎉 Giveaway bắt đầu!</b><div style="font-size:.88rem;margin-top:2px">Tham gia để nhận <b style="display:inline">Nitro</b> miễn phí.</div>
+          <div class="ef"><div><b>Phần thưởng</b>1 tháng</div><div><b>Kết thúc</b>24 giờ</div></div><small>Embed · Webhook Studio</small></div>
+        <div class="ct"><b style="color:#f2f3f5">Container V2</b><div style="font-size:.85rem;margin-top:2px">Bố cục mới với nút liên kết.</div><span class="lb">Tham gia ↗</span></div>
+      </div></div>
+    </div>
+  </div>
+</header>
 
 <main>
-  <header>
-    <h1>Symbol Forge</h1>
-    <div class="hb">
-      <button class="gl rd" id="rnd" type="button" aria-label="Ngẫu nhiên"><svg class="ic"><use href="#i-shuffle"/></svg></button>
-      <button class="gl rd" id="gear" type="button" aria-label="Giao diện & cỡ chữ"><svg class="ic"><use href="#i-sliders"/></svg></button>
-    </div>
-  </header>
-  <div class="gl pop" id="pop" hidden>
-    <div class="cap0">Giao diện</div>
-    <div class="seg" id="themeSeg" style="margin:8px 0 16px"></div>
-    <div class="cap0"><span>Cỡ chữ</span><span id="zv">100%</span></div>
-    <input type="range" id="zoom" min="90" max="140" value="100" aria-label="Cỡ chữ">
+<section style="padding-top:20px"><div class="wrap">
+  <div class="stats">
+    <div class="st rv"><b data-n="415" data-s="+">0</b><span>symbol & combo</span></div>
+    <div class="st rv d1"><b data-n="11">0</b><span>kiểu font</span></div>
+    <div class="st rv d1"><b data-n="11">0</b><span>style tên kênh</span></div>
+    <div class="st rv d2"><b data-n="4">0</b><span>mẫu server</span></div>
+    <div class="st rv d3"><b data-n="2">0</b><span>chế độ webhook</span></div>
   </div>
+</div></section>
 
-  <p class="how"><b>1</b> Nhập tên · <b>2</b> Chọn style · <b>3</b> Chạm để sao chép</p>
-  <div class="lay">
-  <aside><div class="dc" aria-label="Xem trước">
-    <div class="rail"><b class="sv a" style="background:#5e5ce6">S</b><b class="sv" style="background:#30d158">G</b><b class="sv" style="background:#ff9f0a">M</b><b class="sv" style="background:#3a3d44">+</b></div>
-    <div class="side"><div class="dc-h"><span>Server của bạn</span><span>⌄</span></div><div id="pv"></div>
-    <button class="dc-copy" id="copyAll" type="button"><svg class="ic"><use href="#i-copy"/></svg>Sao chép cả server</button></div>
-  </div></aside>
-  <div class="col">
-
-  <p class="sec">Nội dung</p>
-  <div class="gl grp">
-    <label class="fld"><i class="tile" style="background:#0a84ff"><svg class="ic"><use href="#i-hash"/></svg></i><span>Tên kênh</span><input type="text" id="ch" value="thông báo" autocomplete="off"></label>
-    <label class="fld"><i class="tile" style="background:#ff9f0a"><svg class="ic"><use href="#i-smile"/></svg></i><span>Emoji</span><input type="text" id="emo" value="📢" autocomplete="off"></label>
-    <label class="fld"><i class="tile" style="background:#bf5af2"><svg class="ic"><use href="#i-folder"/></svg></i><span>Danh mục</span><input type="text" id="cat" value="Cộng đồng" autocomplete="off"></label>
-    <details class="opt" id="opt">
-      <summary><span>Tùy chỉnh kiểu chữ</span><em id="optSum"></em></summary>
-      <p class="cap">Font</p>
-      <div class="scroll" id="fonts" aria-label="Kiểu chữ"></div>
-      <p class="cap">Chữ hoa</p>
-      <div class="seg" id="cases" aria-label="Chữ hoa"></div>
-      <div class="scroll" id="pick" hidden aria-label="Chọn chữ in hoa"></div>
-      <p class="cap">Font chữ cái đầu (style in đậm chữ đầu)</p>
-      <div class="scroll" id="flrow" aria-label="Font chữ đầu"></div>
-      <div class="fld" style="border-top:1px solid var(--ln);border-bottom:0"><span id="ntl" style="flex:1">Bỏ dấu tiếng Việt</span><input type="checkbox" class="sw" id="nt" aria-labelledby="ntl"></div>
-      <p class="note">Font đặc biệt không có chữ có dấu, hãy bật “Bỏ dấu” để đổi cả câu. Discord tự đổi tên kênh chat thành chữ thường, chữ hoa chỉ giữ ở kênh thoại hoặc font đặc biệt.</p>
-      <div style="padding:0 16px 14px"><button class="chip" id="reset" type="button">Đặt lại mặc định</button></div>
-    </details>
+<section id="tools"><div class="wrap">
+  <div class="eyebrow rv">Hai công cụ</div>
+  <h2 class="rv">Mọi thứ bạn cần cho một server nổi bật</h2>
+  <p class="sub rv">Hai trang riêng, mở là dùng ngay. Không cài đặt, không đăng ký.</p>
+  <div class="two">
+    <article class="big rv"><div class="ic">✦</div><h3>/design</h3>
+      <p>Studio tạo tên kênh, danh mục và thiết kế cả server Discord.</p>
+      <ul><li>Style tên kênh, khung danh mục, in đậm chữ đầu</li><li>11 font Unicode, chọn chữ hoa, bỏ dấu tiếng Việt</li><li>Mẫu server Gaming, Chill, Học tập, Shop</li><li>Thêm bớt kênh, chia sẻ link, tải .txt</li></ul>
+      <md-filled-button href="design/">Mở /design →</md-filled-button></article>
+    <article class="big rv d1"><div class="ic">⚡</div><h3>/webhook</h3>
+      <p>Soạn và gửi tin nhắn webhook với xem trước giống Discord thật.</p>
+      <ul><li>Embed đầy đủ: tác giả, field, ảnh, footer, thời gian</li><li>Container (Components V2): text, section, ảnh, nút link</li><li>Xem trước trực tiếp, JSON, nhập JSON có sẵn</li><li>Cảnh báo giới hạn trước khi gửi</li></ul>
+      <md-filled-button href="webhook/">Mở /webhook →</md-filled-button></article>
   </div>
+</div></section>
 
-  <section class="tab on" id="t0">
-    <p class="sec">Style tên kênh · chạm để chọn & copy</p>
-    <div class="gl grp" id="chList"></div>
-  </section>
-  <section class="tab" id="t1">
-    <p class="sec">Style danh mục · chạm để chọn & copy</p>
-    <div class="gl grp" id="catList"></div>
-    <p class="note" style="padding-top:10px">Mẹo: trên máy tính Discord tự viết HOA tên danh mục, còn trên điện thoại hiện đúng như bạn gõ. Độ rộng ký tự cũng có thể lệch giữa các thiết bị.</p>
-  </section>
-  <section class="tab" id="t2">
-    <p class="sec">Thư viện symbol</p>
-    <div class="gl grp">
-      <div class="tray">
-        <input type="text" id="tray" placeholder="Chạm symbol để ghép vào đây…" style="text-align:left" aria-label="Khay ghép">
-        <button class="btn" id="trayCopy" type="button"><svg class="ic"><use href="#i-copy"/></svg>Sao chép</button>
-        <button class="chip" id="trayClear" type="button"><svg class="ic"><use href="#i-x"/></svg>Xóa</button>
-      </div>
-      <div class="scroll" id="tabs" role="tablist"></div>
-      <div class="grid" id="grid"></div>
-    </div>
-  </section>
-  <section class="tab" id="t3">
-    <p class="sec">Mẫu server · dùng style kênh & danh mục đang chọn</p>
-    <div class="gl grp" id="tpls"></div>
-    <p class="note" style="padding-top:10px">Chạm tên bất kỳ trong khung xem trước để sao chép, hoặc bấm “Sao chép cả server”. Kênh thoại giữ dấu cách và chữ hoa, kênh chat dùng gạch ngang.</p>
-  </section>
-  </div></div>
+<section><div class="wrap">
+  <div class="eyebrow rv">Cảm hứng</div>
+  <h2 class="rv">Một vài style bạn có thể tạo</h2>
+  <p class="sub rv">Chạm vào là sao chép trong /design.</p>
+</div>
+<div class="mq rv" aria-hidden="true"><div class="tr" id="m1"></div></div>
+<div class="mq rv2 rv" aria-hidden="true"><div class="tr" id="m2"></div></div>
+</section>
+
+<section id="how"><div class="wrap">
+  <div class="eyebrow rv">Cách dùng</div>
+  <h2 class="rv">Ba bước là xong</h2>
+  <p class="sub rv">Không cần kỹ năng thiết kế hay lập trình.</p>
+  <div class="steps">
+    <div class="step rv"><i>1</i><h3>Nhập tên</h3><p>Gõ tên kênh, emoji và danh mục. Bản xem trước kiểu Discord cập nhật ngay.</p></div>
+    <div class="step rv d1"><i>2</i><h3>Chọn style</h3><p>Chọn khung, font, chữ hoa hoặc một mẫu server dựng sẵn.</p></div>
+    <div class="step rv d2"><i>3</i><h3>Sao chép hoặc gửi</h3><p>Chạm để sao chép vào Discord, hoặc gửi thẳng tin nhắn bằng webhook.</p></div>
+  </div>
+</div></section>
+
+<section id="features"><div class="wrap">
+  <div class="eyebrow rv">Tính năng</div>
+  <h2 class="rv">Làm kỹ từng chi tiết</h2>
+  <p class="sub rv">Những thứ nhỏ giúp bạn dùng nhanh và yên tâm hơn.</p>
+  <div class="grid">
+    <div class="f rv"><span>📱</span><h3>Điện thoại & máy tính</h3><p>Bố cục tự thích ứng: thanh tab nổi trên điện thoại, 3 cột trên máy tính.</p></div>
+    <div class="f rv d1"><span>🌗</span><h3>Sáng, tối, cỡ chữ</h3><p>Theo máy của bạn, chữ tương phản cao và chỉnh được cỡ chữ.</p></div>
+    <div class="f rv d2"><span>🔗</span><h3>Chia sẻ bằng link</h3><p>Gửi cả thiết kế cho bạn bè chỉ bằng một đường dẫn.</p></div>
+    <div class="f rv"><span>🔒</span><h3>Riêng tư</h3><p>Mọi thứ xử lý trên máy bạn. Webhook URL chỉ lưu khi bạn cho phép.</p></div>
+    <div class="f rv d1"><span>✨</span><h3>Hiệu ứng mượt</h3><p>Animation tinh tế và tự tắt nếu bạn bật giảm chuyển động.</p></div>
+    <div class="f rv d2"><span>🧩</span><h3>Không cần cài đặt</h3><p>Chỉ là trang web tĩnh, chạy được cả khi host miễn phí trên GitHub Pages.</p></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <div class="eyebrow rv">Hỏi đáp</div>
+  <h2 class="rv">Câu hỏi thường gặp</h2>
+  <div class="faq" style="margin-top:28px">
+    <details class="rv"><summary>Có miễn phí không?</summary><p>Có. Công cụ chạy hoàn toàn trên trình duyệt, không cần tài khoản.</p></details>
+    <details class="rv"><summary>Webhook URL của tôi có bị lưu hay gửi đi đâu không?</summary><p>URL chỉ dùng để gửi tin nhắn thẳng tới Discord từ trình duyệt của bạn. Nó chỉ được nhớ trên máy khi bạn tick “Nhớ URL” và không nằm trong link chia sẻ. Hãy xem URL webhook như một mật khẩu.</p></details>
+    <details class="rv"><summary>Vì sao tên kênh chat không giữ chữ hoa?</summary><p>Discord tự chuyển tên kênh chat thành chữ thường. Chữ hoa chỉ giữ ở kênh thoại hoặc khi dùng font Unicode đặc biệt, ví dụ chữ đầu in đậm 𝐓.</p></details>
+    <details class="rv"><summary>Container (Components V2) là gì?</summary><p>Là cách dựng tin nhắn mới của Discord bằng các khối như text, section, ảnh và nút. Tin nhắn Container chỉ chứa component, không có nội dung thường hay embed. Webhook thông thường chỉ gửi được component không tương tác, ví dụ nút liên kết.</p></details>
+    <details class="rv"><summary>Dùng được trên điện thoại không?</summary><p>Được. Giao diện tối ưu cho cả điện thoại và máy tính.</p></details>
+  </div>
+</div></section>
+
+<section><div class="wrap"><div class="final rv">
+  <h2>Sẵn sàng làm server của bạn nổi bật?</h2>
+  <p>Chọn một công cụ và bắt đầu trong vài giây.</p>
+  <div class="cta"><md-filled-button href="design/">✦ Mở /design</md-filled-button><md-filled-tonal-button href="webhook/">⚡ Mở /webhook</md-filled-tonal-button></div>
+</div></div></section>
 </main>
 
-<nav class="gl bar" id="bar" aria-label="Điều hướng">
-  <button class="tb on" type="button" data-t="0"><svg class="ic"><use href="#i-hash"/></svg>Kênh</button>
-  <button class="tb" type="button" data-t="1"><svg class="ic"><use href="#i-folder"/></svg>Danh mục</button>
-  <button class="tb" type="button" data-t="2"><svg class="ic"><use href="#i-spark"/></svg>Symbol</button>
-  <button class="tb" type="button" data-t="3"><svg class="ic"><use href="#i-server"/></svg>Server</button>
-</nav>
-<div id="toast" class="gl" role="status"></div>
+<footer><div class="wrap">
+  <div><a href="design/">/design</a>·<a href="webhook/">/webhook</a></div>
+  <p>Symbol Forge & Webhook Studio là dự án độc lập, không liên kết hay được Discord Inc. bảo trợ.</p>
+</div></footer>
 
 <script>
-const $ = id => document.getElementById(id);
-
-// ---- Kiểu chữ (Unicode Mathematical) ----
-const FONTS = {
-  normal:{label:"Thường"},
-  bold:{label:"𝐁𝐨𝐥𝐝",u:0x1D400,l:0x1D41A},
-  bolditalic:{label:"𝑩𝒐𝒍𝒅 𝑰",u:0x1D468,l:0x1D482},
-  script:{label:"𝓢𝓬𝓻𝓲𝓹𝓽",u:0x1D4D0,l:0x1D4EA},
-  fraktur:{label:"𝕱𝖗𝖆𝖐𝖙𝖚𝖗",u:0x1D56C,l:0x1D586},
-  double:{label:"𝔻𝕠𝕦𝕓𝕝𝕖",u:0x1D538,l:0x1D552,ex:{C:"ℂ",H:"ℍ",N:"ℕ",P:"ℙ",Q:"ℚ",R:"ℝ",Z:"ℤ"}},
-  sans:{label:"𝗦𝗮𝗻𝘀",u:0x1D5D4,l:0x1D5EE},
-  sansi:{label:"𝙎𝙖𝙣𝙨 𝙄",u:0x1D63C,l:0x1D656},
-  mono:{label:"𝙼𝚘𝚗𝚘",u:0x1D670,l:0x1D68A},
-  circled:{label:"Ⓒⓘⓡⓒⓛⓔ",u:0x24B6,l:0x24D0},
-  wide:{label:"Ｗｉｄｅ",u:0xFF21,l:0xFF41},
-  small:{label:"ꜱᴍᴀʟʟ"}
-};
-const SC = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ";
-function conv(s, k){
-  const f = FONTS[k];
-  if(!f || k === "normal") return s;
-  return [...s.normalize("NFC")].map(c=>{
-    if(k === "small") return /[a-z]/.test(c) ? SC[c.charCodeAt(0)-97] : c;
-    if(/[A-Z]/.test(c)) return (f.ex && f.ex[c]) || String.fromCodePoint(f.u + c.charCodeAt(0) - 65);
-    if(/[a-z]/.test(c)) return (f.ex && f.ex[c]) || String.fromCodePoint(f.l + c.charCodeAt(0) - 97);
-    return c;
-  }).join("");
-}
-const nt = s => noTone ? s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D") : s;
-const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
-const slug = s => s.trim().toLowerCase().replace(/\s+/g, "-");
-let fl = "bold";
-const boldFirst = s => s ? conv(s[0], fl) + s.slice(1) : s;
-
-// ---- Style tên kênh (b:1 = in đậm chữ đầu) – thêm style của bạn ở đây ----
-const CH = [
-  {n:"Chấm giữa",     f:(e,t)=>`${e}・${t}`},
-  {n:"Gạch + in đậm", f:(e,t)=>`${e}│${t}`, b:1},
-  {n:"Gạch dày",      f:(e,t)=>`${e}┃${t}`},
-  {n:"Ngoặc 「」",     f:(e,t)=>`「${e}」${t}`},
-  {n:"Gạch đứt",      f:(e,t)=>`${e}︱${t}`, b:1},
-  {n:"Sao trang trí", f:(e,t)=>`✦${e}・${t}`},
-  {n:"Mũi tên",       f:(e,t)=>`${e}➤${t}`},
-  {n:"Hoa",           f:(e,t)=>`❀${e}│${t}`},
-  {n:"Trăng sao",     f:(e,t)=>`₊˚${e}・${t}`},
-  {n:"Nơ ngoặc",      f:(e,t)=>`꒰${e}꒱${t}`},
+// --- Hero: xoay style kênh/danh mục ---
+const b = s => String.fromCodePoint(0x1D400 + s[0].toUpperCase().charCodeAt(0) - 65) + s.slice(1);
+const ST = [
+  ["Chấm giữa", (e,t)=>`${e}・${t}`, "━━━━━━☾「 CỘNG ĐỒNG 」☽━━━━━━"],
+  ["Gạch + in đậm", (e,t)=>`${e}│${b(t)}`, "══════✦『 CỘNG ĐỒNG 』✦══════"],
+  ["Gạch dày", (e,t)=>`${e}┃${t}`, "─── ⋆⋅☆⋅⋆ CỘNG ĐỒNG ⋆⋅☆⋅⋆ ───"],
+  ["Ngoặc 「」", (e,t)=>`「${e}」${t}`, "▬▬▬ஜ【 CỘNG ĐỒNG 】ஜ▬▬▬"],
+  ["Trăng sao", (e,t)=>`₊˚${e}・${t}`, "₊˚⊹ ♡ CỘNG ĐỒNG ♡ ⊹˚₊"],
+  ["Nơ ngoặc", (e,t)=>`꒰${e}꒱${t}`, "⋆｡°✩ CỘNG ĐỒNG ✩°｡⋆"],
 ];
-// ---- Style danh mục ({t} = tên) ----
-const CAT = [
-  "━━━━━━☾「 {t} 」☽━━━━━━",
-  "══════✦『 {t} 』✦══════",
-  "─── ⋆⋅☆⋅⋆ {t} ⋆⋅☆⋅⋆ ───",
-  "▬▬▬ஜ【 {t} 】ஜ▬▬▬",
-  "╭┈┈┈ ✿ {t} ✿ ┈┈┈╮",
-  "⋆｡°✩ {t} ✩°｡⋆",
-  "➤ ━━ {t} ━━ ◀",
-  "꧁༺ {t} ༻꧂",
-  "₊˚⊹ ♡ {t} ♡ ⊹˚₊",
-  "┈┈•✦ {t} ✦•┈┈",
-];
-// ---- Thư viện symbol (nhóm → các ký hiệu, cách nhau bởi dấu cách) ----
-const SYM = {
-  "Combos":   "⋆｡°✩ ₊˚⊹ ✧･ﾟ:* *:･ﾟ✧ ⋆⁺₊⋆ ˚₊‧꒰ა ໒꒱·˚ ୨୧ ୨ৎ ʚɞ ⋆˚࿔ ⋆.˚ ☆彡 ✦•┈┈┈ ┈┈•✦ ━━━✦ ✦━━━ ─･｡ﾟ☆ ⋆⭒˚｡⋆ ₊˚ʚ♡ɞ˚₊ ✿❀✿ ❥═══ ═══❥ ☾⋆⁺₊✧ ༄ ᯓ★",
-  "Borders":  "━ ═ ─ │ ┃ ║ ┆ ┇ ┊ ╍ ╌ ▬ ┈ ┉ ╭ ╮ ╯ ╰ ┏ ┓ ┗ ┛ ╔ ╗ ╚ ╝ ‖ ︱ ｜ ・ • ▁ ▔ ░ ▒ ▓ █",
-  "Arrows":   "→ ← ↑ ↓ ↔ ↗ ↘ ➤ ➜ ➔ ➥ ⇒ ⇨ » « ‣ ▶ ◀ ➣ ➪ ↪ ↩ ➳ ⇢ ➛ ⤷ ⤶",
-  "Stars":    "★ ☆ ✦ ✧ ✩ ✪ ✫ ✬ ✭ ✮ ✯ ✰ ⭐ 🌟 ✨ ⋆ ⍟ ✶ ✷ ✸ ❂ ꕤ ⁎ ✲ ⚝ ⭑ ⭒",
-  "Flowers":  "✿ ❀ ❁ ❃ ❋ ✾ ❊ ⚘ 🌸 🌺 🌼 🌷 🌹 🥀 💮 🏵 ❦ ☘ 🍀 🌿 🌱 ✻ ✼",
-  "Hearts":   "♡ ♥ ❤ ❥ ❣ ❧ 💗 💖 💕 💞 💓 💝 🤍 🖤 💜 💙 🩷 🩵 ღ ˚ʚ♡ɞ˚ 𓆩♡𓆪",
-  "Moon & Sky":"☾ ☽ ☪ ✧ ☁ ☀ ☼ ⛅ ⚡ ❄ ☄ 🌙 🌛 🌜 🌠 🌌 🪐 🌈 ☂ ❅ ❆ 𖤐",
-  "Frames":   "「 」 『 』 【 】 《 》 〈 〉 〔 〕 〖 〗 ⦅ ⦆ ❨ ❩ ❬ ❭ ❮ ❯ ⟦ ⟧ ﹁ ﹂ ︵ ︶ ︹ ︺ ꒰ ꒱ ❝ ❞ ⌈ ⌉ ⌊ ⌋",
-  "Gaming":   "🎮 🕹 👾 🎯 🎲 ⚔ 🗡 🛡 🏹 💣 🏆 🥇 👑 ♟ 🎰 ☠ 💀 🔫 ⚡ 🔥 🧩 🪄 🎴 🃏",
-  "Aesthetic":"˚ ₊ ‧ ༺ ༻ ◌ ˖ ⟡ ᝰ ⊹ 𓆩 𓆪 ꧁ ꧂ ✧˖° ⋆｡° ୨ ୧ ʚ ɞ ☁ ᵔ ᴗ ˶ ᵕ",
-  "Cute":     "ᵔᴥᵔ ʕ•ᴥ•ʔ (˶ᵔᵕᵔ˶) ₍ᐢ•ﻌ•ᐢ₎ ꒰⑅ᵕ༚ᵕ⑅꒱ ⸜(｡˃ᵕ˂)⸝♡ ᓚᘏᗢ (◕‿◕✿) UwU OwO (≧◡≦) ฅ^•ﻌ•^ฅ 🐾 🐱 🐰 🧸 🦋 🦊 🐻 🦄",
-  "Music":    "♪ ♫ ♬ ♩ ♭ ♮ ♯ 🎵 🎶 🎤 🎧 🎸 🎹 🥁 🎷 🎺 🎻 📻 🎼",
-  "Shapes":   "● ○ ◉ ◎ ■ □ ▪ ▫ ▲ △ ▼ ▽ ◆ ◇ ◈ ◊ ⬡ ⬢ ⬟ ⌑ ⏣ ▰ ▱ ❖ ✚ ✜ ✖ ⌬",
-  "Numbers":  "① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ⁰ ¹ ² ³ ₀ ₁ ₂ Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ",
-  "Status":   "🟢 🔴 🟡 🔵 🟣 🟠 ⚪ ⚫ ✔ ✘ ⚠ 🚫 ⛔ 🔰 🆕 🔥 💯 🆙 🆒 ✅ ❌",
-  "Misc":     "📢 📌 📣 💬 📜 📖 ℹ ❓ 🔔 🔒 🎁 🎉 ☕ 📷 🔗 💎 ⚙ 🛠 📅 🤝 🌐 ™ © ® ☯ ✆",
-};
-
-// ---- Trạng thái ----
-const TPL = [
-  {n:"Gaming",i:"🎮",c:[["Thông tin",[["📢","thông báo"],["📜","luật lệ"],["👋","chào mừng"]]],["Cộng đồng",[["💬","trò chuyện"],["📸","hình ảnh"],["🎯","tìm đồng đội"]]],["Game",[["🎮","game chung"],["🏆","giải đấu"]]],["Voice",[["🔊","Phòng 1",1],["🔊","Phòng 2",1],["🎧","Chill",1]]]]},
-  {n:"Chill",i:"☕",c:[["Thông tin",[["📢","thông báo"],["📜","luật lệ"]]],["Trò chuyện",[["💬","tám chuyện"],["😂","meme"],["📸","ảnh đẹp"]]],["Âm nhạc",[["🎵","nhạc"],["🎧","Nghe nhạc",1],["☕","Góc chill",1]]]]},
-  {n:"Học tập",i:"📚",c:[["Thông tin",[["📢","thông báo"],["📜","nội quy"]]],["Học tập",[["📖","tài liệu"],["📝","bài tập"],["❓","hỏi đáp"]]],["Phòng học",[["🔊","Học nhóm",1],["🤫","Tập trung",1]]]]},
-  {n:"Shop",i:"🛒",c:[["Thông tin",[["📢","thông báo"],["💰","bảng giá"],["✅","uy tín"]]],["Hỗ trợ",[["🛒","đặt hàng"],["🎫","hỗ trợ"],["⭐","đánh giá"]]],["Trò chuyện",[["💬","chat chung"],["🔊","Tư vấn",1]]]]},
-];
-let tpl = 0, allText = "";
-let si = 1, ci = 0, font = "normal", noTone = false, mode = "lower";
-const caps = new Set();
-const CASES = [["lower","thường"],["first","Chữ đầu"],["words","Mỗi Từ"],["upper","HOA"],["custom","Tự chọn"]];
-function applyCase(t, m){
-  if(mode === "first") return cap(t);
-  if(mode === "words") return t.replace(/(^|[- ])([^- ])/g,(_,a,c)=>a+c.toUpperCase());
-  if(mode === "upper") return t.toUpperCase();
-  if(mode === "custom" && m) return [...t].map((c,i)=>caps.has(i) ? c.toUpperCase() : c).join("");
-  return t;
+const CH = [["📢","thông-báo"],["📜","luật-lệ"],["💬","trò-chuyện"],["🎮","game"]];
+const sw = [...document.querySelectorAll(".dc .sw")];
+let k = 0;
+function show(i){
+  const [n, f, c] = ST[i];
+  sw[0].textContent = "⌄ " + c;
+  CH.forEach(([e,t], j) => sw[j+1].textContent = f(e, t));
+  $mb.textContent = "Style: " + n;
 }
+const $mb = document.getElementById("mb");
+setInterval(() => {
+  sw.forEach(x => x.classList.add("o"));
+  setTimeout(() => { k = (k + 1) % ST.length; show(k); sw.forEach(x => x.classList.remove("o")); }, 230);
+}, 2600);
 
-function chName(i, e, raw, m, v){
-  const s = CH[i];
-  let b = applyCase(v ? nt(raw).trim() : slug(nt(raw)), m);
-  if(s.b && mode === "lower") b = cap(b);
-  const x = s.b && font === "normal" ? boldFirst(b) : conv(b, font);
-  return s.f(e, x);
-}
-const catName = (i, raw) => CAT[i].replace("{t}", conv(nt(raw).trim().toUpperCase(), font));
+// --- Marquee ---
+const R1 = ["📢・thông-báo","📜│𝐋uật-lệ","💬┃trò-chuyện","「🎮」game-chung","₊˚🌸・chill","꒰🎧꒱âm-nhạc","✦🏆・giải-đấu","🛒➤đặt-hàng","❀📸│hình-ảnh","🔊・Phòng Học"];
+const R2 = ["━━━━━━☾「 CỘNG ĐỒNG 」☽━━━━━━","══════✦『 GAME 』✦══════","⋆｡°✩ THÔNG TIN ✩°｡⋆","▬▬▬ஜ【 HỖ TRỢ 】ஜ▬▬▬","╭┈┈┈ ✿ SHOP ✿ ┈┈┈╮","꧁༺ VIP ༻꧂","₊˚⊹ ♡ CHILL ♡ ⊹˚₊","➤ ━━ SỰ KIỆN ━━ ◀"];
+const fill = (id, a) => { const el = document.getElementById(id); el.innerHTML = [...a, ...a].map(x => `<span></span>`).join(""); [...el.children].forEach((s, i) => s.textContent = [...a, ...a][i]); };
+fill("m1", R1); fill("m2", R2);
 
-// ---- Copy + hiệu ứng ----
-const toast = $("toast"); let tt;
-function burst(el){
-  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-  const r = el.getBoundingClientRect(), x = r.left + r.width/2, y = r.top + r.height/2;
-  for(let i=0;i<10;i++){
-    const p = document.createElement("i");
-    p.textContent = ["✦","✧","★","·","♡"][i%5];
-    p.style.cssText = `position:fixed;left:${x}px;top:${y}px;pointer-events:none;z-index:9;font-style:normal;color:hsl(${Math.random()*360} 90% 70%)`;
-    document.body.appendChild(p);
-    const a = Math.random()*6.28, d = 34 + Math.random()*46;
-    p.animate([
-      {transform:"translate(-50%,-50%) scale(1.2)",opacity:1},
-      {transform:`translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d}px)) scale(.3)`,opacity:0}
-    ],{duration:750,easing:"ease-out"}).onfinish = () => p.remove();
-  }
-}
-function copy(text, el, label){
-  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).catch(()=>{
-    const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove();
-  });
-  if(navigator.vibrate) navigator.vibrate(8);
-  toast.innerHTML = '<svg class="ic" style="color:#30d158;width:20px;height:20px;vertical-align:-5px;margin-right:7px"><use href="#i-checkc"/></svg><span></span>'; toast.lastChild.textContent = "Đã sao chép · " + (label || text);
-  toast.classList.add("on"); clearTimeout(tt); tt = setTimeout(()=>toast.classList.remove("on"), 1500);
-  if(el) burst(el);
-}
-
-// ---- Render ----
-function row(value, label, on, onclick){
-  const b = document.createElement("button");
-  b.type = "button"; b.className = "row" + (on ? " on" : "");
-  b.innerHTML = '<span class="v"></span><small></small>';
-  b.firstChild.textContent = value; b.children[1].textContent = label;
-  b.onclick = () => { onclick(); copy(value, b); };
-  return b;
-}
-function render(){
-  const e = $("emo").value || "📢", raw = $("ch").value || "kênh", cat = $("cat").value || "danh mục";
-  $("chList").replaceChildren(...CH.map((s,i)=>row(chName(i,e,raw,true), s.n, i===si, ()=>{si=i;render()})));
-  $("catList").replaceChildren(...CAT.map((s,i)=>row(catName(i,cat), "Kiểu "+(i+1), i===ci, ()=>{ci=i;render()})));
-  const mk = (txt, on, fn) => { const b = document.createElement("button"); b.type="button"; b.className="chip"+(on?" on":""); b.textContent=txt; b.onclick=fn; return b; };
-  const sg = (t,o,f) => { const b = mk(t,o,f); b.className = "sg" + (o ? " on" : ""); return b; };
-  $("fonts").replaceChildren(...Object.keys(FONTS).map(k=>mk(FONTS[k].label, k===font, ()=>{font=k;render()})));
-  $("flrow").replaceChildren(...Object.keys(FONTS).filter(k=>k!=="normal"&&k!=="small").map(k=>mk(conv("Aa",k), k===fl, ()=>{fl=k;render()})));
-  $("nt").checked = noTone;
-  $("optSum").textContent = [FONTS[font].label, CASES.find(c=>c[0]===mode)[1], noTone ? "Bỏ dấu" : ""].filter(Boolean).join(" · ");
-  $("cases").replaceChildren(...CASES.map(([k,l])=>sg(l, k===mode, ()=>{ mode=k; if(k==="custom" && !caps.size) caps.add(0); render(); })));
-  const pk = $("pick"); pk.hidden = mode !== "custom";
-  if(mode === "custom") pk.replaceChildren(...[...slug(nt(raw))].map((c,i)=>{
-    const b = mk(caps.has(i) ? c.toUpperCase() : c, caps.has(i), ()=>{ caps.has(i) ? caps.delete(i) : caps.add(i); render(); });
-    b.classList.add("lt"); return b;
-  }));
-  // Mô hình server: mẫu + tên bạn nhập ở danh mục/kênh đầu
-  const model = TPL[tpl].c.map(([ct, chs], k) => ({t: k ? ct : cat, ch: chs.map(([em, nm, v], j) => (k || j) ? {e:em, n:nm, v:!!v} : {e, n:raw, m:1})}));
-  const pv = [], lines = []; let first = true, count = 0;
-  model.forEach(c => {
-    const ct = catName(ci, c.t), h = document.createElement("div");
-    h.className = "dc-cat"; h.textContent = "⌄ " + ct; h.onclick = () => copy(ct, h);
-    pv.push(h); lines.push(ct);
-    c.ch.forEach(x => {
-      const nm = chName(si, x.e, x.n, x.m, x.v), d = document.createElement("div");
-      d.className = "dc-ch" + (first ? " act" : ""); first = false; count++;
-      d.innerHTML = `<svg class="ic"><use href="#i-${x.v ? "speaker" : "hash"}"/></svg><span></span>`;
-      d.lastChild.textContent = nm; d.onclick = () => copy(nm, d);
-      pv.push(d); lines.push(nm);
-    });
-    lines.push("");
-  });
-  allText = lines.join("\n").trim(); $("copyAll").dataset.n = count;
-  $("pv").replaceChildren(...pv);
-  $("tpls").replaceChildren(...TPL.map((t, i) => {
-    const b = document.createElement("button"); b.type = "button"; b.className = "row" + (i === tpl ? " on" : "");
-    b.innerHTML = '<i class="tile" style="background:rgba(255,255,255,.14);font-size:1.05rem"></i><span class="v"></span><small></small>';
-    b.children[0].textContent = t.i; b.children[1].textContent = t.n;
-    b.children[2].textContent = t.c.reduce((n, c) => n + c[1].length, 0) + " kênh";
-    b.onclick = () => { tpl = i; render(); };
-    return b;
-  }));
-}
-["ch","emo","cat"].forEach(id => $(id).addEventListener("input", render));
-
-// ---- Symbol + khay ----
-function showGroup(name){
-  document.querySelectorAll("#tabs .chip").forEach(t => t.classList.toggle("on", t.textContent === name));
-  $("grid").replaceChildren(...SYM[name].split(" ").map(s=>{
-    const n = [...s].length, b = document.createElement("button");
-    b.type = "button"; b.className = "sym" + (n>6 ? " w3" : n>2 ? " w2" : ""); b.textContent = s;
-    b.onclick = () => { $("tray").value += s; copy(s, b); };
-    return b;
-  }));
-}
-Object.keys(SYM).forEach(k=>{
-  const b = document.createElement("button");
-  b.type = "button"; b.className = "chip"; b.setAttribute("role","tab"); b.textContent = k;
-  b.onclick = () => showGroup(k);
-  $("tabs").appendChild(b);
-});
-$("copyAll").onclick = e => copy(allText, e.currentTarget, "cả server (" + e.currentTarget.dataset.n + " kênh)");
-$("trayCopy").onclick = e => $("tray").value && copy($("tray").value, e.currentTarget);
-$("trayClear").onclick = () => $("tray").value = "";
-
-// ---- Tab bar + Liquid Glass ----
-document.querySelectorAll(".tb").forEach(b => b.onclick = () => {
-  document.querySelectorAll(".tb").forEach(x => x.classList.toggle("on", x === b));
-  document.querySelectorAll(".tab").forEach((t,i) => t.classList.toggle("on", i == b.dataset.t));
-  scrollTo({top:0, behavior:"smooth"});
-});
-const TH = [["auto","Tự động"],["dark","Tối"],["light","Sáng"]];
-let prefs = {theme:"auto", z:100};
-try{ Object.assign(prefs, JSON.parse(localStorage.getItem("prefs") || "{}")); }catch(_){}
-const savePrefs = () => { try{ localStorage.setItem("prefs", JSON.stringify(prefs)); }catch(_){} };
-function applyPrefs(){
-  const r = document.documentElement;
-  r.dataset.theme = prefs.theme; r.style.setProperty("--z", prefs.z/100);
-  $("zoom").value = prefs.z; $("zv").textContent = prefs.z + "%";
-  $("themeSeg").replaceChildren(...TH.map(([k,l])=>{
-    const b = document.createElement("button"); b.type = "button"; b.className = "sg" + (k === prefs.theme ? " on" : ""); b.textContent = l;
-    b.onclick = () => { prefs.theme = k; savePrefs(); applyPrefs(); };
-    return b;
-  }));
-}
-$("zoom").oninput = e => { prefs.z = +e.target.value; savePrefs(); applyPrefs(); };
-$("gear").onclick = () => $("pop").hidden = !$("pop").hidden;
-applyPrefs();
-
-// ---- Ngẫu nhiên ----
-$("rnd").onclick = e => {
-  const pool = [...SYM.Gaming.split(" "), ...SYM.Stars.split(" "), ...SYM.Hearts.split(" "), ...SYM.Flowers.split(" "), ...SYM.Status.split(" ")];
-  const r = a => a[Math.floor(Math.random()*a.length)];
-  $("emo").value = r(pool); si = Math.floor(Math.random()*CH.length); ci = Math.floor(Math.random()*CAT.length); tpl = Math.floor(Math.random()*TPL.length);
-  font = r(Object.keys(FONTS)); render(); burst(e.currentTarget);
-};
-
-render(); showGroup("Combos");
+// --- Hiện dần + đếm số ---
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(!e.isIntersecting) return;
+  e.target.classList.add("in"); io.unobserve(e.target);
+  const n = e.target.querySelector("[data-n]");
+  if(n){ const to = +n.dataset.n, s = n.dataset.s || "", t0 = performance.now();
+    (function tick(t){ const p = Math.min(1, (t - t0) / 1200), v = 1 - Math.pow(1 - p, 3); n.textContent = Math.round(to * v) + (p === 1 ? s : ""); if(p < 1) requestAnimationFrame(tick); })(t0); }
+}), {threshold:.15});
+document.querySelectorAll(".rv").forEach(el => io.observe(el));
 </script>
 </body>
 </html>
