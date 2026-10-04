@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webhook Studio – Embed & Container cho Discord</title>
+<style>
+:root{--bg:#0a0c13;--card:#121624;--chip:#1b2135;--bd:#262d45;--ln:#232a42;--tx:#f4f6ff;--mu:#aab2cd;--acc:#a5b4ff;--tint:#5563f5;--segon:#3b4570;--bar:rgba(18,22,36,.94);--grad:linear-gradient(135deg,#5b4bff,#b72bd0);--err:#ff8a94;--wrn:#ffd166}
+@media(prefers-color-scheme:light){:root{--bg:#f3f4fb;--card:#fff;--chip:#eceef8;--bd:#dcdff0;--ln:#e4e7f3;--tx:#12142a;--mu:#52587a;--acc:#3a46d8;--tint:#4452e6;--segon:#fff;--bar:rgba(255,255,255,.95);--err:#c62839;--wrn:#8a5a00}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;min-height:100vh;color:var(--tx);font:1rem/1.45 -apple-system,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  background:radial-gradient(620px 300px at 8% 0,#5b4bff26,transparent),radial-gradient(520px 300px at 100% 8%,#b72bd022,transparent),var(--bg);background-attachment:fixed}
+main{max-width:1280px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 16px 60px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:6px 0 14px}
+h1{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center}
+h1::before{content:"⚡";display:inline-grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--grad);font-size:1.15rem;margin-right:11px;box-shadow:0 8px 20px -8px #b72bd0}
+.pg{display:flex;gap:6px}
+.pg a{padding:8px 15px;border-radius:99px;background:var(--chip);color:var(--mu);text-decoration:none;font-weight:700;font-size:.9rem}
+.pg a.on{background:var(--grad);color:#fff}
+.seg{display:flex;gap:2px;padding:3px;border-radius:12px;background:var(--chip)}
+.seg button{flex:1;border:0;background:none;padding:9px 6px;border-radius:9px;font-weight:600;font-size:.88rem}
+.seg button.on{background:var(--segon);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.vt{margin-bottom:14px}
+.lay{display:block}
+.pane{display:none}
+main[data-v=ed] #ed,main[data-v=pv] #pvp,main[data-v=js] #jsp{display:block;animation:tin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 4px;font-size:1.15rem}
+.card>p{margin:0 0 10px;color:var(--mu);font-size:.88rem}
+.f{display:flex;flex-direction:column;gap:5px;margin:10px 0}
+.f>span,.ck{font-size:.82rem;font-weight:600;color:var(--mu)}
+input[type=text],input[type=password],textarea,select{width:100%;background:var(--chip);color:var(--tx);border:1px solid transparent;border-radius:12px;padding:10px 12px;font:inherit;font-size:.95rem;min-width:0}
+textarea{resize:vertical;min-height:64px;line-height:1.4}
+input:focus,textarea:focus,select:focus{border-color:var(--acc);outline:0}
+select option{background:var(--card)}
+input[type=color]{width:46px;height:40px;padding:2px;border-radius:10px;border:0;background:var(--chip);cursor:pointer}
+.cr{display:flex;gap:8px;align-items:center}
+.ck{display:flex;align-items:center;gap:8px;margin:10px 0;cursor:pointer}
+.ck input{width:18px;height:18px;accent-color:var(--tint)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:99px;padding:11px 20px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 8px 18px -10px #b72bd0}
+.btn:active{transform:scale(.96)}
+.btn.alt{background:var(--chip);color:var(--tx);box-shadow:none}
+.mini{border:0;background:var(--chip);border-radius:8px;padding:5px 10px;font-size:.82rem;font-weight:600}
+.mini.del{color:var(--err)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+details.emb{border:1px solid var(--bd);border-radius:16px;padding:4px 14px 14px;margin:10px 0;background:var(--card)}
+details.emb summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.emb summary::-webkit-details-marker{display:none}
+details.emb summary em{font-style:normal;color:var(--mu);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blk,.fd{border:1px dashed var(--bd);border-radius:14px;padding:4px 12px 12px;margin:10px 0}
+.bh{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+.bh span{display:flex;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chips button{border:1px solid var(--bd);background:var(--chip);border-radius:99px;padding:8px 14px;font-weight:600;font-size:.85rem}
+.warn{border-radius:14px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;background:#ffd16622;border:1px solid #ffd16655;color:var(--wrn)}
+.warn.err{background:#ff8a9422;border-color:#ff8a9455;color:var(--err)}
+.warn div+div{margin-top:3px}
+.status{margin-top:10px;font-size:.88rem;color:var(--mu);word-break:break-word}
+#js{font:.82rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:420px;white-space:pre}
+.req{font-size:.8rem;color:var(--mu);margin:0 0 10px;word-break:break-all}
+/* ---- Discord preview ---- */
+.dcw{background:#313338;color:#dbdee1;border-radius:18px;padding:16px;font:15px/1.4 "gg sans","Segoe UI",system-ui,sans-serif;border:1px solid var(--bd);box-shadow:0 14px 34px -16px rgba(0,0,0,.7)}
+.msg{display:flex;gap:14px}.av{width:40px;height:40px;border-radius:50%;flex:none;object-fit:cover;background:#5865f2}
+.mb{min-width:0;flex:1}.mh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.un{font-weight:600;color:#f2f3f5}.tag{background:#5865f2;color:#fff;font-size:.62rem;font-weight:700;padding:1px 5px;border-radius:4px}.ts{font-size:.72rem;color:#949ba4}
+.dcw a{color:#00a8fc;text-decoration:none}.dcw a:hover{text-decoration:underline}
+.dcw code{background:#1e1f22;border-radius:4px;padding:1px 5px;font-size:.88em}
+.dcw pre{background:#2b2d31;border:1px solid #1e1f22;border-radius:6px;padding:8px 10px;overflow:auto;margin:4px 0}.dcw pre code{background:none;padding:0}
+.tx{word-break:break-word}.q{border-left:4px solid #4e5058;padding-left:10px}.h1{font-size:1.5rem;font-weight:700;line-height:1.25}.h2{font-size:1.25rem;font-weight:700;line-height:1.25}.h3{font-size:1.05rem;font-weight:700}
+.sub{color:#949ba4;font-size:.8rem}.sp{background:#1e1f22;color:transparent;border-radius:3px;cursor:pointer}.sp.on{color:inherit;background:#3b3d44}
+.em{margin-top:6px;max-width:520px;background:#2b2d31;border-left:4px solid #4e5058;border-radius:4px;padding:8px 14px 12px 12px;display:grid;grid-template-columns:1fr auto;gap:6px 14px}
+.em>*{grid-column:1/-1}.em>.th{grid-column:2;grid-row:1/span 3;width:80px;height:80px;border-radius:4px;object-fit:cover}
+.em>.ea,.em>.et,.em>.ed{grid-column:1}
+.ea{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600}.ai{width:24px;height:24px;border-radius:50%}
+.et{font-weight:700;color:#f2f3f5}.ed{font-size:.92rem}
+.efs{display:grid;grid-template-columns:repeat(12,1fr);gap:8px}.efn{font-weight:700;font-size:.88rem;color:#f2f3f5}.efv{font-size:.88rem}
+.ei{max-width:100%;border-radius:4px;margin-top:4px}
+.eft{display:flex;align-items:center;gap:8px;font-size:.75rem;color:#b5bac1}.fi{width:20px;height:20px;border-radius:50%}
+.cont{margin-top:6px;max-width:520px;background:#2b2d31;border:1px solid #3f4147;border-left:4px solid #4e5058;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.sec{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}.sec .tx{flex:1;min-width:0}.sec img{width:72px;height:72px;border-radius:6px;object-fit:cover}
+.sp2{padding:3px 0}.sp2.big{padding:10px 0}.sp2 hr{margin:0;border:0;border-top:1px solid #4e5058}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;border-radius:8px;overflow:hidden}.gal img{width:100%;height:100%;aspect-ratio:16/10;object-fit:cover}.gal img:first-child:nth-last-child(odd){grid-column:1/-1}
+.btns{display:flex;flex-wrap:wrap;gap:8px}.lb{background:#4e5058;color:#fff!important;border-radius:6px;padding:6px 14px;font-size:.88rem;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;padding:11px 18px;border-radius:99px;font-weight:600;transition:transform .38s cubic-bezier(.2,1.5,.4,1),opacity .2s;pointer-events:none;max-width:90vw;word-break:break-word;z-index:9;background:var(--bar);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--bd);box-shadow:0 12px 30px -10px rgba(0,0,0,.5)}
+#toast.on{transform:translate(-50%,0);opacity:1}
+@media(min-width:980px){
+  .lay{display:grid;grid-template-columns:minmax(0,1fr) 470px;gap:28px;align-items:start}
+  #ed{display:block!important}main[data-v=ed] #pvp{display:block}
+  .rt{position:sticky;top:18px;max-height:calc(100vh - 36px);overflow-y:auto}
+  .vt{width:470px;margin-left:auto}.vt md-primary-tab[data-v=ed]{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script type="importmap">{"imports":{"@material/web/":"https://esm.run/@material/web@2/"}}</script>
+<script type="module" src="../assets/md3-web.js"></script>
+<script src="../assets/md3.js"></script>
+<link rel="stylesheet" href="../assets/md3.css">
+</head>
+<body>
+<main id="app" data-v="ed">
+  <header>
+    <h1>Webhook Studio</h1>
+    <nav class="pg" data-md3-slot><a href="../design/">/design</a><a class="on" href="./">/webhook</a></nav>
+  </header>
+  <md-tabs id="vt" class="vt"><md-primary-tab data-v="ed">Soạn</md-primary-tab><md-primary-tab data-v="pv">Xem trước</md-primary-tab><md-primary-tab data-v="js">JSON</md-primary-tab></md-tabs>
+
+  <div class="lay">
+    <section id="ed" class="pane">
+      <div class="card" id="stat">
+        <h2>Gửi tin nhắn</h2>
+        <p>Tạo webhook trong Cài đặt kênh → Tích hợp → Webhook, rồi dán URL vào đây.</p>
+        <md-outlined-text-field class="fx" label="Webhook URL" type="password" data-p="url" placeholder="https://discord.com/api/webhooks/…" autocomplete="off" spellcheck="false"></md-outlined-text-field>
+        <label class="ck"><md-checkbox data-p="remember"></md-checkbox> Nhớ URL trên thiết bị này (không đưa vào link chia sẻ)</label>
+        <div class="row2">
+          <md-outlined-text-field class="fx" label="Tên hiển thị" data-p="username" placeholder="Webhook"></md-outlined-text-field>
+          <md-outlined-text-field class="fx" label="Thread ID (tuỳ chọn)" data-p="thread"></md-outlined-text-field>
+        </div>
+        <md-outlined-text-field class="fx" label="Avatar URL" data-p="avatar_url" placeholder="https://…"></md-outlined-text-field>
+        <div class="acts"><md-filled-button data-a="send">⚡ Gửi webhook</md-filled-button><md-filled-tonal-button data-a="share">Chia sẻ thiết kế</md-filled-tonal-button><md-text-button data-a="resetAll">Xóa tất cả</md-text-button></div>
+        <div class="status" id="st"></div>
+      </div>
+      <div class="card">
+        <h2>Kiểu tin nhắn</h2>
+        <p>Embed là kiểu cổ điển. Container dùng Components V2, khi đó tin nhắn chỉ chứa component, không có nội dung thường hay embed.</p>
+        <md-tabs id="modeTabs"><md-primary-tab data-a="mode" data-m="embed">Embed</md-primary-tab><md-primary-tab data-a="mode" data-m="v2">Container (V2)</md-primary-tab></md-tabs>
+      </div>
+      <div id="dyn"></div>
+    </section>
+    <aside class="rt">
+      <div id="pvp" class="pane"><div id="wn"></div><div class="dcw" id="pv"></div></div>
+      <div id="jsp" class="pane"><div class="card">
+        <h2>JSON payload</h2>
+        <p class="req" id="req"></p>
+        <textarea id="js" spellcheck="false" aria-label="JSON"></textarea>
+        <div class="acts"><md-filled-button data-a="copyJson">Sao chép JSON</md-filled-button><md-filled-tonal-button data-a="applyJson">Áp dụng JSON</md-filled-tonal-button></div>
+      </div></div>
+    </aside>
+  </div>
+</main>
+<div id="toast" role="status"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hex = n => "#" + (+n).toString(16).padStart(6, "0");
+const safe = u => /^https?:\/\//i.test(u || "") ? esc(u) : "";
+const get = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);
+function set(o, p, v){
+  const ks = p.split("."); let a = o;
+  ks.forEach((k, i) => { if(i === ks.length - 1) a[k] = v; else { if(a[k] == null) a[k] = /^\d+$/.test(ks[i+1]) ? [] : {}; a = a[k]; } });
+}
+const AV = "https://cdn.discordapp.com/embed/avatars/";
+
+// ---------- Trạng thái (cấu trúc giống payload của Discord) ----------
+const demoEmbed = () => ({color:0x5865f2, author:{name:"Webhook Studio"}, title:"Xin chào Discord!", description:"Đây là **embed** gửi bằng webhook.\nHỗ trợ `code`, ~~gạch~~ và [liên kết](https://discord.com).", fields:[{name:"Trạng thái",value:"Đang hoạt động",inline:true},{name:"Ping",value:"24ms",inline:true}], footer:{text:"Gửi từ Webhook Studio"}, timestamp:true});
+const newCont = () => ({type:17, accent_color:0x5865f2, components:[
+  {type:10, content:"## 📢 Thông báo server\nChào mừng bạn đến với **server của chúng mình**!"},
+  {type:14, divider:true, spacing:1},
+  {type:9, components:[{type:10, content:"**Luật lệ**\nĐọc kỹ trước khi chat nhé."}], accessory:{type:11, media:{url:AV+"1.png"}}},
+  {type:1, components:[{type:2, style:5, label:"Mở Discord", url:"https://discord.com"}]}]});
+const BLK = {
+  text:() => ({type:10, content:"Nội dung mới"}),
+  sec:() => ({type:9, components:[{type:10, content:"Tiêu đề section"}], accessory:{type:11, media:{url:AV+"2.png"}}}),
+  sep:() => ({type:14, divider:true, spacing:1}),
+  gal:() => ({type:12, items:[{media:{url:AV+"3.png"}}]}),
+  btn:() => ({type:1, components:[{type:2, style:5, label:"Mở link", url:"https://discord.com"}]}),
+};
+const NAME = {10:"Text", 9:"Section", 14:"Separator", 12:"Media Gallery", 1:"Nút liên kết"};
+let S = {url:"", remember:false, thread:"", username:"", avatar_url:"", mode:"embed", content:"", embeds:[demoEmbed()], components:[newCont()]};
+
+// ---------- Ô nhập có ràng buộc dữ liệu ----------
+function disp(p, t){
+  const v = get(S, p);
+  if(t === "gal") return (v || []).map(x => x.media?.url || "").join("\n");
+  if(t === "btn") return (v || []).map(b => `${b.label || ""} | ${b.url || ""}`).join("\n");
+  if(t === "color") return v == null ? "#5865f2" : hex(v);
+  return v == null ? "" : v;
+}
+function store(el){
+  const p = el.dataset.p, t = el.dataset.t; let v = el.localName === "md-checkbox" ? el.checked : el.value;
+  if(t === "color") v = parseInt(v.slice(1), 16);
+  else if(t === "int") v = +v;
+  else if(t === "gal") v = v.split("\n").map(x => x.trim()).filter(Boolean).slice(0, 10).map(u => ({media:{url:u}}));
+  else if(t === "btn") v = v.split("\n").map(x => x.trim()).filter(Boolean).slice(0, 5).map(l => { const [a, ...r] = l.split("|"); return {type:2, style:5, label:a.trim(), url:r.join("|").trim()}; });
+  set(S, p, v);
+}
+const inp = (p, label, ph = "") => `<md-outlined-text-field class="fx" label="${esc(label)}" data-p="${p}" value="${esc(disp(p))}" placeholder="${esc(ph)}"></md-outlined-text-field>`;
+const ta = (p, label, rows = 3, t = "") => `<md-outlined-text-field class="fx" type="textarea" rows="${rows}" label="${esc(label)}" data-p="${p}" ${t ? `data-t="${t}"` : ""} value="${esc(disp(p, t))}"></md-outlined-text-field>`;
+const chk = (p, label) => `<label class="ck"><md-checkbox data-p="${p}" ${get(S, p) ? "checked" : ""}></md-checkbox> ${label}</label>`;
+const col = (p, label) => `<div class="f"><span>${label}</span><div class="cr"><input type="color" data-p="${p}" data-t="color" value="${disp(p, "color")}"><md-text-button data-a="clr" data-p="${p}">Bỏ màu</md-text-button></div></div>`;
+const sel = (p, label, o) => `<md-outlined-select class="fx" label="${label}" data-p="${p}" data-t="int">${o.map(([v, l]) => `<md-select-option value="${v}" ${get(S, p) == v ? "selected" : ""}><div slot="headline">${l}</div></md-select-option>`).join("")}</md-outlined-select>`;
+
+// ---------- Form động ----------
+function embedForm(e, i){
+  const b = "embeds." + i;
+  return `<details class="emb" open><summary><span>Embed ${i+1}</span><em>${esc(e.title || "")}</em></summary>
+  ${col(b + ".color", "Màu viền")}
+  <div class="row2">${inp(b + ".author.name", "Tên tác giả")}${inp(b + ".author.icon_url", "Icon tác giả")}</div>
+  ${inp(b + ".author.url", "Link tác giả")}
+  ${inp(b + ".title", "Tiêu đề")}${inp(b + ".url", "Link tiêu đề")}
+  ${ta(b + ".description", "Mô tả (Markdown)", 4)}
+  <div class="row2">${inp(b + ".thumbnail.url", "Thumbnail URL")}${inp(b + ".image.url", "Ảnh lớn URL")}</div>
+  <div class="row2">${inp(b + ".footer.text", "Footer")}${inp(b + ".footer.icon_url", "Icon footer")}</div>
+  ${chk(b + ".timestamp", "Hiện thời gian gửi")}
+  ${(e.fields || []).map((f, j) => `<div class="fd"><div class="row2">${inp(`${b}.fields.${j}.name`, "Tên field")}${chk(`${b}.fields.${j}.inline`, "Inline")}</div>${ta(`${b}.fields.${j}.value`, "Giá trị", 2)}<md-text-button class="del" data-a="rmField" data-i="${i}" data-j="${j}">Xóa field</md-text-button></div>`).join("")}
+  <div class="acts"><md-filled-tonal-button data-a="addField" data-i="${i}">＋ Field</md-filled-tonal-button><md-text-button class="del" data-a="rmEmbed" data-i="${i}">Xóa embed</md-text-button></div></details>`;
+}
+function blkForm(k, p, c, i){
+  let body = "";
+  if(k.type === 10) body = ta(p + ".content", "Nội dung (Markdown)", 3);
+  else if(k.type === 9){
+    const a = k.accessory, t = a?.type === 11 ? "thumb" : a?.type === 2 ? "btn" : "none";
+    body = ta(p + ".components.0.content", "Nội dung", 3)
+      + `<md-outlined-select class="fx" label="Accessory" data-a="acc" data-c="${c}" data-k="${i}">${[["none", "Không có"], ["thumb", "Thumbnail"], ["btn", "Nút liên kết"]].map(([v, l]) => `<md-select-option value="${v}" ${t === v ? "selected" : ""}><div slot="headline">${l}</div></md-select-option>`).join("")}</md-outlined-select>`
+      + (t === "thumb" ? inp(p + ".accessory.media.url", "Thumbnail URL") + inp(p + ".accessory.description", "Mô tả ảnh") : t === "btn" ? inp(p + ".accessory.label", "Nhãn nút") + inp(p + ".accessory.url", "Link nút") : "");
+  }
+  else if(k.type === 14) body = `<div class="row2">${chk(p + ".divider", "Hiện đường kẻ")}${sel(p + ".spacing", "Khoảng cách", [[1, "Nhỏ"], [2, "Lớn"]])}</div>`;
+  else if(k.type === 12) body = ta(p + ".items", "Mỗi dòng 1 URL ảnh (tối đa 10)", 3, "gal");
+  else if(k.type === 1) body = ta(p + ".components", "Mỗi dòng: Nhãn | URL (tối đa 5)", 3, "btn");
+  const bt = (a, l, cls = "") => `<md-text-button class="${cls}" data-a="${a}" data-c="${c}" data-k="${i}">${l}</md-text-button>`;
+  return `<div class="blk"><div class="bh"><b>${NAME[k.type] || "?"}</b><span>${bt("up", "↑")}${bt("dn", "↓")}${bt("rmBlk", "✕", "del")}</span></div>${body}</div>`;
+}
+function contForm(c, ci){
+  const b = "components." + ci;
+  const add = t => `<md-assist-chip label="＋ ${t[1]}" data-a="addBlk" data-i="${ci}" data-t="${t[0]}"></md-assist-chip>`;
+  return `<details class="emb" open><summary><span>Container ${ci+1}</span><em>${(c.components || []).length} thành phần</em></summary>
+  <div class="row2">${col(b + ".accent_color", "Màu accent")}${chk(b + ".spoiler", "Spoiler")}</div>
+  ${(c.components || []).map((k, ki) => blkForm(k, `${b}.components.${ki}`, ci, ki)).join("")}
+  <div class="chips">${[["text", "Text"], ["sec", "Section"], ["sep", "Separator"], ["gal", "Gallery"], ["btn", "Nút link"]].map(add).join("")}</div>
+  <md-text-button class="del" data-a="rmCont" data-i="${ci}">Xóa container</md-text-button></details>`;
+}
+function renderDyn(){
+  $("modeTabs").activeTabIndex = S.mode === "v2" ? 1 : 0;
+  $("dyn").innerHTML = S.mode === "embed"
+    ? `<div class="card"><h2>Nội dung & Embed</h2><p>Tối đa 10 embed, tổng 6000 ký tự.</p>${ta("content", "Nội dung tin nhắn", 3)}${S.embeds.map(embedForm).join("")}<div class="acts"><md-filled-tonal-button data-a="addEmbed">＋ Thêm embed</md-filled-tonal-button></div></div>`
+    : `<div class="card"><h2>Container (Components V2)</h2><p>Dựng bố cục bằng container, text, section, đường kẻ, ảnh và nút liên kết.</p>${S.components.map(contForm).join("")}<div class="acts"><md-filled-tonal-button data-a="addCont">＋ Thêm container</md-filled-tonal-button></div></div>`;
+}
+function fillStatic(){
+  document.querySelectorAll("#stat [data-p]").forEach(el => { const v = get(S, el.dataset.p); if(el.localName === "md-checkbox") el.checked = !!v; else el.value = v ?? ""; });
+}
+
+// ---------- Payload ----------
+function clean(v){
+  if(Array.isArray(v)) return v.map(clean).filter(x => x !== undefined);
+  if(v && typeof v === "object"){ const o = {}; for(const k in v){ const c = clean(v[k]); if(c !== undefined) o[k] = c; } return Object.keys(o).length ? o : undefined; }
+  return v === "" || v == null ? undefined : v;
+}
+function build(){
+  const b = {};
+  if(S.username) b.username = S.username;
+  if(S.avatar_url) b.avatar_url = S.avatar_url;
+  if(S.mode === "v2"){ b.flags = 32768; b.components = S.components; }
+  else { b.content = S.content; b.embeds = S.embeds.map(e => ({...e, timestamp: e.timestamp ? new Date().toISOString() : undefined})); }
+  return clean(b) || {};
+}
+const cnt = a => (a || []).reduce((n, c) => n + 1 + cnt(c.components) + (c.accessory ? 1 : 0), 0);
+function warn(p){
+  const w = [];
+  if(S.mode === "embed"){
+    const es = p.embeds || [];
+    if(!p.content && !es.length) w.push("Tin nhắn trống: hãy thêm nội dung hoặc embed.");
+    if((p.content || "").length > 2000) w.push("Nội dung vượt 2000 ký tự.");
+    if(es.length > 10) w.push("Tối đa 10 embed.");
+    let tot = 0;
+    es.forEach((e, i) => {
+      tot += [e.title, e.description, e.footer?.text, e.author?.name, ...(e.fields || []).flatMap(f => [f.name, f.value])].join("").length;
+      if((e.title || "").length > 256) w.push(`Embed ${i+1}: tiêu đề vượt 256 ký tự.`);
+      if((e.description || "").length > 4096) w.push(`Embed ${i+1}: mô tả vượt 4096 ký tự.`);
+      if((e.fields || []).length > 25) w.push(`Embed ${i+1}: tối đa 25 field.`);
+      (e.fields || []).forEach((f, j) => { if(!f.name || !f.value) w.push(`Embed ${i+1} · field ${j+1} cần cả tên và giá trị.`); });
+    });
+    if(tot > 6000) w.push("Tổng ký tự của các embed vượt 6000.");
+  } else {
+    const cs = p.components || []; let txt = 0;
+    if(!cs.length) w.push("Hãy thêm ít nhất 1 container.");
+    if(cnt(cs) > 40) w.push("Tối đa 40 component trong một tin nhắn.");
+    cs.forEach((c, ci) => (c.components || []).forEach(k => {
+      if(k.type === 10){ txt += (k.content || "").length; if(!k.content) w.push(`Container ${ci+1}: có Text trống.`); }
+      if(k.type === 9){
+        (k.components || []).forEach(t => txt += (t.content || "").length);
+        const a = k.accessory;
+        if(!k.components?.[0]?.content) w.push(`Container ${ci+1}: Section thiếu nội dung.`);
+        if(!a || (a.type === 11 && !a.media?.url) || (a.type === 2 && (!a.label || !a.url))) w.push(`Container ${ci+1}: Section cần accessory hợp lệ.`);
+      }
+      if(k.type === 12 && !(k.items || []).length) w.push(`Container ${ci+1}: Gallery chưa có ảnh.`);
+      if(k.type === 1 && !(k.components || []).every(b => b.label && b.url)) w.push(`Container ${ci+1}: nút liên kết cần đủ nhãn và URL.`);
+    }));
+    if(txt > 4000) w.push("Tổng văn bản vượt 4000 ký tự.");
+  }
+  return w;
+}
+
+// ---------- Markdown kiểu Discord ----------
+function md(s){
+  s = esc(s || ""); const codes = [];
+  s = s.replace(/```(?:[a-z]*\n)?([\s\S]*?)```/g, (_, c) => { codes.push("<pre><code>" + c.replace(/\n$/, "") + "</code></pre>"); return "\u0000" + (codes.length - 1) + "\u0000"; });
+  s = s.replace(/`([^`\n]+)`/g, (_, c) => { codes.push("<code>" + c + "</code>"); return "\u0000" + (codes.length - 1) + "\u0000"; });
+  s = s.split("\n").map(l => { let m;
+    if(m = l.match(/^(#{1,3}) (.*)$/)) return `<div class="h${m[1].length}">${m[2]}</div>`;
+    if(m = l.match(/^-# (.*)$/)) return `<div class="sub">${m[1]}</div>`;
+    if(m = l.match(/^&gt; (.*)$/)) return `<div class="q">${m[1]}</div>`;
+    if(m = l.match(/^[-*] (.*)$/)) return `<div>• ${m[1]}</div>`;
+    return l + "<br>";
+  }).join("").replace(/(<br>)+$/, "");
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+       .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/__(.+?)__/g, "<u>$1</u>")
+       .replace(/\*(?!\s)([^*]+?)\*/g, "<i>$1</i>").replace(/(^|\W)_([^_]+)_(?=\W|$)/g, "$1<i>$2</i>")
+       .replace(/~~(.+?)~~/g, "<s>$1</s>").replace(/\|\|(.+?)\|\|/g, '<span class="sp" onclick="this.classList.toggle(\'on\')">$1</span>');
+  return s.replace(/\u0000(\d+)\u0000/g, (_, i) => codes[+i]);
+}
+
+// ---------- Xem trước ----------
+const img = (u, c) => safe(u) ? `<img class="${c}" src="${safe(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : "";
+const lb = b => safe(b.url) ? `<a class="lb" href="${safe(b.url)}" target="_blank" rel="noopener noreferrer">${esc(b.label || "")} ↗</a>` : `<span class="lb">${esc(b.label || "…")}</span>`;
+const cell = (f, n) => `<div style="grid-column:span ${n}"><div class="efn">${esc(f.name || "")}</div><div class="efv">${md(f.value)}</div></div>`;
+function embedHtml(e){
+  const t = e.title ? (safe(e.url) ? `<a href="${safe(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title)) : "";
+  let f = ""; const fs = e.fields || [];
+  for(let i = 0; i < fs.length;){
+    let n = 0; while(i + n < fs.length && fs[i + n].inline && n < 3) n++;
+    if(!n){ f += cell(fs[i], 12); i++; } else { for(let q = 0; q < n; q++) f += cell(fs[i + q], 12 / n); i += n; }
+  }
+  const ft = e.footer?.text, ts = e.timestamp ? new Date(e.timestamp).toLocaleString("vi-VN") : "";
+  const an = e.author?.name ? (safe(e.author.url) ? `<a href="${safe(e.author.url)}" target="_blank" rel="noopener noreferrer">${esc(e.author.name)}</a>` : esc(e.author.name)) : "";
+  return `<div class="em" style="border-left-color:${e.color != null ? hex(e.color) : "#4e5058"}">${an ? `<div class="ea">${img(e.author.icon_url, "ai")}<span>${an}</span></div>` : ""}${t ? `<div class="et">${t}</div>` : ""}${e.description ? `<div class="ed">${md(e.description)}</div>` : ""}${f ? `<div class="efs">${f}</div>` : ""}${img(e.image?.url, "ei")}${ft || ts ? `<div class="eft">${img(e.footer?.icon_url, "fi")}<span>${esc(ft || "")}${ft && ts ? " • " : ""}${ts}</span></div>` : ""}${img(e.thumbnail?.url, "th")}</div>`;
+}
+function comp(c){
+  switch(c.type){
+    case 17: return `<div class="cont" style="border-left-color:${c.accent_color != null ? hex(c.accent_color) : "#4e5058"}">${(c.components || []).map(comp).join("")}</div>`;
+    case 10: return `<div class="tx">${md(c.content)}</div>`;
+    case 9: { const a = c.accessory; const acc = a?.type === 11 ? img(a.media?.url, "") : a?.type === 2 ? lb(a) : ""; return `<div class="sec"><div class="tx">${(c.components || []).map(comp).join("")}</div>${acc}</div>`; }
+    case 14: return `<div class="sp2${c.spacing === 2 ? " big" : ""}">${c.divider === false ? "" : "<hr>"}</div>`;
+    case 12: return `<div class="gal">${(c.items || []).map(i => img(i.media?.url, "")).join("")}</div>`;
+    case 1: return `<div class="btns">${(c.components || []).map(lb).join("")}</div>`;
+    default: return "";
+  }
+}
+function renderPv(p){
+  const t = new Date().toLocaleTimeString("vi-VN", {hour:"2-digit", minute:"2-digit"});
+  const body = S.mode === "v2" ? (p.components || []).map(comp).join("") : (p.content ? `<div class="tx">${md(p.content)}</div>` : "") + (p.embeds || []).map(embedHtml).join("");
+  $("pv").innerHTML = `<div class="msg"><img class="av" src="${safe(S.avatar_url) || AV + "0.png"}" alt="" referrerpolicy="no-referrer"><div class="mb"><div class="mh"><span class="un">${esc(S.username || "Webhook")}</span><span class="tag">APP</span><span class="ts">Hôm nay lúc ${t}</span></div>${body || '<div class="ts">Tin nhắn trống</div>'}</div></div>`;
+}
+
+// ---------- Cập nhật ----------
+const URL_RE = /^https:\/\/(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/api\/(?:v\d+\/)?webhooks\/\d+\/[\w-]+$/;
+const query = () => { const q = new URLSearchParams({wait:"true"}); if(S.mode === "v2") q.set("with_components", "true"); if(S.thread) q.set("thread_id", S.thread.trim()); return q.toString(); };
+function update(){
+  const p = build(), w = warn(p);
+  renderPv(p);
+  $("wn").innerHTML = w.length ? `<div class="warn">${w.map(x => `<div>⚠ ${esc(x)}</div>`).join("")}</div>` : "";
+  if(document.activeElement !== $("js")) $("js").value = JSON.stringify(p, null, 2);
+  $("req").textContent = "POST …/webhooks/{id}/{token}?" + query();
+  try{
+    localStorage.setItem("whDraft", JSON.stringify({...S, url:undefined}));
+    if(S.remember) localStorage.setItem("whUrl", S.url || ""); else localStorage.removeItem("whUrl");
+  }catch(_){}
+}
+
+// ---------- Hành động ----------
+let tt;
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2600); }
+function copy(text, label){
+  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).catch(() => { const x = document.createElement("textarea"); x.value = text; document.body.appendChild(x); x.select(); document.execCommand("copy"); x.remove(); });
+  toast("Đã sao chép " + label);
+}
+async function send(){
+  const u = (S.url || "").trim(), st = $("st");
+  if(!URL_RE.test(u)){ st.textContent = "⚠ Webhook URL chưa hợp lệ."; return toast("Webhook URL chưa hợp lệ"); }
+  const p = build(), w = warn(p);
+  if(w.length && !confirm("Có cảnh báo:\n\n" + w.join("\n") + "\n\nVẫn gửi?")) return;
+  st.textContent = "Đang gửi…";
+  try{
+    const r = await fetch(u + "?" + query(), {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(p)});
+    if(r.ok){ const m = await r.json().catch(() => ({})); st.textContent = "✓ Đã gửi" + (m.id ? ` (message ${m.id})` : ""); toast("Đã gửi thành công"); }
+    else { const t = await r.text(); st.textContent = `✕ Lỗi ${r.status}: ${t.slice(0, 300)}`; toast("Gửi thất bại (" + r.status + ")"); }
+  }catch(e){ st.textContent = "✕ Không gửi được: " + e.message; toast("Không gửi được"); }
+}
+function applyJson(){
+  try{
+    const o = JSON.parse($("js").value);
+    S.username = o.username || ""; S.avatar_url = o.avatar_url || "";
+    if(Array.isArray(o.components) && o.components.length){ S.mode = "v2"; S.components = o.components; }
+    else { S.mode = "embed"; S.content = o.content || ""; S.embeds = (o.embeds || []).map(e => ({...e, timestamp: !!e.timestamp})); }
+    fillStatic(); renderDyn(); update(); toast("Đã áp dụng JSON");
+  }catch(e){ toast("JSON không hợp lệ: " + e.message); }
+}
+function share(){
+  const bytes = new TextEncoder().encode(JSON.stringify({...S, url:undefined, remember:undefined, thread:undefined}));
+  copy(location.href.split("#")[0] + "#" + btoa(String.fromCharCode(...bytes)), "link chia sẻ (không chứa webhook URL)");
+}
+function act(a, b){
+  const d = b.dataset, i = +d.i, j = +d.j, c = +d.c, k = +d.k;
+  switch(a){
+    case "mode": S.mode = d.m; break;
+    case "addEmbed": if(S.embeds.length < 10) S.embeds.push({color:0x5865f2, title:"Tiêu đề", description:"Mô tả của embed.", fields:[]}); break;
+    case "rmEmbed": S.embeds.splice(i, 1); break;
+    case "addField": { const e = S.embeds[i]; e.fields = e.fields || []; if(e.fields.length < 25) e.fields.push({name:"Tên", value:"Giá trị", inline:true}); break; }
+    case "rmField": S.embeds[i].fields.splice(j, 1); break;
+    case "clr": set(S, d.p, undefined); break;
+    case "addCont": if(S.components.length < 10) S.components.push(newCont()); break;
+    case "rmCont": S.components.splice(i, 1); break;
+    case "addBlk": S.components[i].components.push(BLK[d.t]()); break;
+    case "rmBlk": S.components[c].components.splice(k, 1); break;
+    case "up": case "dn": { const L = S.components[c].components, n = a === "up" ? k - 1 : k + 1; if(n >= 0 && n < L.length) [L[k], L[n]] = [L[n], L[k]]; break; }
+    case "send": return send();
+    case "copyJson": return copy($("js").value, "JSON");
+    case "applyJson": return applyJson();
+    case "share": return share();
+    case "resetAll": if(!confirm("Xóa toàn bộ thiết kế hiện tại?")) return; S = {...S, content:"", embeds:[], components:[], username:"", avatar_url:""}; fillStatic(); break;
+  }
+  renderDyn(); update();
+}
+document.addEventListener("input", e => { if(e.target.dataset.p !== undefined && !e.target.dataset.a){ store(e.target); update(); } });
+document.addEventListener("change", e => {
+  const el = e.target;
+  if(el.dataset.a === "acc"){
+    const k = S.components[+el.dataset.c].components[+el.dataset.k];
+    if(el.value === "none") delete k.accessory;
+    else k.accessory = el.value === "thumb" ? {type:11, media:{url:""}} : {type:2, style:5, label:"", url:""};
+    renderDyn(); update();
+  } else if(el.dataset.p !== undefined && el.localName !== "md-outlined-text-field"){ store(el); update(); }
+});
+document.addEventListener("click", e => { const b = e.target.closest("[data-a]"); if(b && b.dataset.a !== "acc") act(b.dataset.a, b); });
+
+// ---------- Chuyển khung nhìn (điện thoại) ----------
+function setV(v){
+  if(innerWidth >= 980 && v === "ed") v = "pv";
+  $("app").dataset.v = v;
+  $("vt").activeTabIndex = [...document.querySelectorAll("#vt md-primary-tab")].findIndex(b => b.dataset.v === v);
+}
+$("vt").onclick = e => { const b = e.target.closest("md-primary-tab"); if(b) setV(b.dataset.v); };
+addEventListener("resize", () => setV($("app").dataset.v));
+
+// ---------- Khởi tạo ----------
+try{
+  const d = JSON.parse(localStorage.getItem("whDraft") || "null"); if(d) Object.assign(S, d);
+  const u = localStorage.getItem("whUrl"); if(u !== null){ S.url = u; S.remember = true; }
+}catch(_){}
+try{
+  const h = location.hash.slice(1);
+  if(h){ const o = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(h), c => c.charCodeAt(0)))); Object.assign(S, o); }
+}catch(_){}
+const ready = Promise.race([customElements.whenDefined("md-outlined-text-field"), new Promise(r => setTimeout(r, 6000))]);
+ready.then(() => { fillStatic(); renderDyn(); update(); setV(innerWidth >= 980 ? "pv" : "ed"); });
+</script>
+</body>
+</html>
